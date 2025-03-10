@@ -5,7 +5,14 @@
         <div class="flex relative">
           <div class="sortMenu">sort by...</div>
         </div>
-        <div class="postContainer">test</div>
+        <div class="postContainer">
+          <div class="flex">
+            <div class="postImageBlock">
+              <font-awesome-icon :icon="['fas', 'image']" size="2xl" class="absolute w-1/2" />
+            </div>
+            <div>lists</div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -18,7 +25,7 @@
   position: absolute;
 
   top: 1.5rem;
-  left: 15rem;
+  left: 35rem;
 
   padding: 0.5rem;
 
@@ -33,8 +40,23 @@
 }
 
 .postContainer {
-  background-color: #b3b3b3;
+  background-color: #c8c8c8;
 
-  padding: 1rem;
+  min-height: 6.5rem;
+  min-width: 22.5rem;
+
+  border-radius: 1rem;
+}
+
+.postImageBlock {
+  background-color: aqua;
+
+  position: relative;
+
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+
+  min-height: 6.5rem;
+  min-width: 5.5rem;
 }
 </style>
