@@ -6,11 +6,16 @@
           <div class="sortMenu">sort by...</div>
         </div>
         <div class="postContainer">
-          <div class="flex">
-            <div class="postImageBlock">
-              <font-awesome-icon :icon="['fas', 'image']" size="2xl" class="absolute w-1/2" />
+          <div class="postImageBlock">
+            <font-awesome-icon :icon="['fas', 'image']" size="2xl" class="absolute w-1/2~" />
+          </div>
+          <div class="px-2 py-1 flex flex-col">
+            <span class="text-2xl font-bold">title</span>
+            <span class="text-gray-700">Lorem Ipsum fkfdsfdsafdsafd ;kjfdsakjfdsa;kj</span>
+            <div class="flex gap-1.5 text-gray-500">
+              <span>author</span>
+              <span>1972/7/11</span>
             </div>
-            <div>lists</div>
           </div>
         </div>
       </div>
@@ -42,8 +47,10 @@
 .postContainer {
   background-color: #c8c8c8;
 
-  min-height: 6.5rem;
-  min-width: 22.5rem;
+  display: flex;
+
+  height: 7.5rem;
+  width: 22.5rem;
 
   border-radius: 1rem;
 }
