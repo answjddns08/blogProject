@@ -61,7 +61,7 @@
           <span class="text-gray-500 font-semibold">계정이 없나요? </span>
           <RouterLink
             to="/register"
-            @click="ModalOpen"
+            @click="modalOpen"
             class="hover:underline text-gray-500 font-semibold"
             >회원가입</RouterLink
           >
@@ -118,6 +118,12 @@ function modalOpen() {
   cursor: pointer;
 
   right: 0rem;
+
+  transition: all 0.2s ease;
+}
+
+.X-btn:hover {
+  color: aqua;
 }
 
 .modal-btn {

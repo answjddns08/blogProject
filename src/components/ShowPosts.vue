@@ -52,12 +52,12 @@ const test = ref(4);
   border-radius: 0.5rem;
 
   white-space: nowrap;
+
+  transition: ease-out 0.25s;
 }
 
 .sortMenu:hover {
   background-color: #858585;
-
-  transition: ease-out 0.25s;
 }
 
 .postContainer {
@@ -70,12 +70,12 @@ const test = ref(4);
   border-radius: 1rem;
 
   margin-bottom: 4rem;
+
+  transition: ease-out 0.25s;
 }
 
 .postContainer:hover {
   background-color: #858585;
-
-  transition: ease-out 0.25s;
 }
 
 .postImageBlock {
