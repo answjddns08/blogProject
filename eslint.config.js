@@ -1,17 +1,17 @@
-import js from '@eslint/js'
-import pluginVue from 'eslint-plugin-vue'
-import globals from 'globals'
-import pluginVitest from '@vitest/eslint-plugin'
+import js from "@eslint/js";
+import pluginVue from "eslint-plugin-vue";
+import globals from "globals";
+import pluginVitest from "@vitest/eslint-plugin";
 
 export default [
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,vue}'],
+    name: "app/files-to-lint",
+    files: ["**/*.{js,mjs,jsx,vue}"],
   },
 
   {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    name: "app/files-to-ignore",
+    ignores: ["**/dist/**", "**/dist-ssr/**", "**/coverage/**"],
   },
 
   {
@@ -23,10 +23,10 @@ export default [
   },
 
   js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
-  
+  ...pluginVue.configs["flat/essential"],
+
   {
     ...pluginVitest.configs.recommended,
-    files: ['src/**/__tests__/*'],
+    files: ["src/**/__tests__/*"],
   },
-]
+];

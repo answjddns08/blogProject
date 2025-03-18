@@ -4,7 +4,7 @@
       <div class="flex relative mb-10">
         <!-- <div class="sortMenu">sort by...</div> -->
       </div>
-      <RouterLink to="/" class="postContainer" v-for="a in test" :key="a">
+      <RouterLink :to="`/post/${a}`" class="postContainer" v-for="a in test" :key="a">
         <div class="postImageBlock">
           <font-awesome-icon :icon="['fas', 'image']" size="2xl" class="absolute w-1/2~" />
         </div>
@@ -52,6 +52,7 @@ const test = ref(4);
   border-radius: 0.5rem;
 
   white-space: nowrap;
+  /* 줄바꿈 끄기 */
 
   transition: ease-out 0.25s;
 }
