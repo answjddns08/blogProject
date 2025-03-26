@@ -2,7 +2,7 @@
   <div class="flex justify-center">
     <div class="flex flex-col">
       <div class="flex relative mb-10">
-        <div class="sortMenu">sort by...</div>
+        <!-- <div class="sortMenu">sort by...</div> -->
       </div>
       <RouterLink
         :to="`/post/${post.folder}`"
@@ -18,18 +18,18 @@
           />
         </div>
         <div class="px-3 py-1 flex flex-col h-full justify-between">
-          <span class="text-2xl font-bold">title</span>
+          <span class="text-2xl font-bold">{{ post.frontmatter.title }}</span>
           <span class="flex text-gray-700">
-            sentence test sentence test sentence test sentence test sentence test sentence test
+            {{ post.content.slice(0, 100) }}
           </span>
           <div class="flex gap-3 w-full">
-            <div class="tagBlock">tag</div>
-            <div class="tagBlock">sex</div>
-            <div class="tagBlock">tag</div>
+            <div class="tagBlock" v-for="tag in post.frontmatter.tag" :key="tag">
+              {{ tag }}
+            </div>
           </div>
           <div class="flex gap-1.5 justify-between text-gray-500">
             <div>
-              <span>author - 1972/7/11</span>
+              <span>redeyes - {{ post.frontmatter.date }}</span>
             </div>
             <div class="mr-2 text-sm">
               <span>? comments</span>
@@ -49,34 +49,58 @@ const posts = ref([]);
 
 async function getPosts() {
   try {
-    // src/blog 폴더에 있는 md 파일들 불러옴(문자열 형태로)
-    const modules = import.meta.glob("/src/blog/**/*.md", { query: "raw" });
+    // import.meta.glob을 사용하여 src/posts 폴더에 있는 모든 md 파일을 가져옴
+    const modules = import.meta.glob("/src/posts/**/*.md", {
+      query: "?raw",
+      import: "default",
+    });
 
-    // --- 안에 포스트 속성들이 있어서 그걸 직접 변환해야 해서 raw로 불러옴
+    /*example
+    const modules = {
+      "/src/posts/post1.md": () => Promise.resolve("post1 content"),
+      "/src/posts/post2.md": () => Promise.resolve("post2 content"),
+      };
+    */
 
     const blogPosts = await Promise.all(
+      // Object.entries로 파일 경로와 내용을 가져와서 각각 처리
+
       Object.entries(modules).map(async ([filePath, getContent]) => {
+        // 파일 내용을 문자열로 가져옴
         const content = await getContent();
+
+        // 파일 경로에서 폴더명과 파일명 추출
         const pathParts = filePath.split("/");
         const folder = pathParts[pathParts.length - 2];
         const fileName = pathParts[pathParts.length - 1];
 
+        // 정규식을 사용하여 frontmatter(--- 사이의 내용)와 마크다운 본문 분리
         const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
         let frontmatter = {};
         let markdownContent = content;
 
+        // frontmatter가 존재하는 경우 처리
         if (frontmatterMatch) {
+          // frontmatter 텍스트 추출
           const frontmatterText = frontmatterMatch[1];
+
+          // frontmatter를 객체로 변환
+          // 각 줄을 key: value 형태로 파싱
           frontmatter = frontmatterText.split("\n").reduce((acc, line) => {
             const [key, ...values] = line.split(":").map((s) => s.trim());
             if (key && values.length) {
-              acc[key] = values.join(":").replace(/^["']|["']$/g, "");
+              const value = values.join(":").replace(/^["']|["']$/g, "");
+              // 쉼표가 있는 값은 배열로 변환 (예: tag: "test, test1" -> ["test", "test1"])
+              acc[key] = value.includes(",") ? value.split(",").map((v) => v.trim()) : value;
             }
             return acc;
           }, {});
+
+          // 마크다운 본문 추출
           markdownContent = frontmatterMatch[2];
         }
 
+        // 처리된 데이터를 객체로 반환
         return {
           folder,
           fileName,
@@ -86,6 +110,7 @@ async function getPosts() {
       })
     );
 
+    // 결과를 posts ref에 저장
     posts.value = blogPosts;
   } catch (error) {
     console.error("Error reading blog files:", error);
