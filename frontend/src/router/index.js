@@ -13,7 +13,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/post/:folder",
+      path: "/posts/:folder",
       name: "post",
       component: PostView,
     },

@@ -4,7 +4,12 @@
       <div class="flex relative mb-10">
         <!-- <div class="sortMenu">sort by...</div> -->
       </div>
-      <RouterLink class="postContainer" to="/" v-for="post in posts" :key="post">
+      <RouterLink
+        class="postContainer"
+        :to="`/posts/${post.folder}`"
+        v-for="post in posts"
+        :key="post"
+      >
         <div class="postImageBlock">
           <font-awesome-icon
             :icon="['fas', 'image']"
@@ -47,8 +52,6 @@ async function getPosts() {
   const { data } = await axios.get("https://notebook.o-r.kr/api/posts/");
 
   posts.value = data;
-
-  console.log(data);
 }
 
 onMounted(getPosts);

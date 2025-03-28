@@ -4,6 +4,6 @@ import { getPosts, getPost } from "../controller/postController.js";
 const router = Router();
 
 router.get("/", getPosts);
-router.get("/:id", getPost);
+router.get("/:folder", getPost);
 
 export default router;

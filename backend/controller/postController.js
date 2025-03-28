@@ -50,7 +50,7 @@ async function getPosts(req, res) {
 					}, {});
 
 				return {
-					id: folder,
+					folder: folder,
 					title: frontMatter.title,
 					date: frontMatter.date,
 					tag: frontMatter.tag ? frontMatter.tag.split(",") : [],
@@ -67,26 +67,48 @@ async function getPosts(req, res) {
 }
 
 /**
- * Get specific post by ID
- * @param {*} req - request with post ID in params
+ * Get specific post by folder
+ * @param {*} req - request with post folder in params
  * @param {*} res - response
  */
 async function getPost(req, res) {
 	try {
-		const postId = req.params.id;
-		const indexPath = path.join(POSTS_DIR, postId, "index.html");
+		const postFolder = req.params.folder;
 
-		try {
-			const content = await fs.readFile(indexPath, "utf-8");
-			res.json({
-				id: postId,
-				content: content,
-			});
-		} catch (error) {
-			res.status(404).json({ message: "Post not found" });
+		const postPath = path.join(POSTS_DIR, postFolder);
+
+		const folder = await fs.readdir(postPath);
+
+		if (folder.length == 0) {
+			res.status(404).json({ message: "No post found" });
+			return;
 		}
+
+		const indexPath = path.join(postPath, "index.md");
+		const content = await fs.readFile(indexPath, "utf-8");
+
+		const frontMatter = content
+			.split("---")[1]
+			.split("\n")
+			.filter((line) => line)
+			.reduce((acc, line) => {
+				const [key, value] = line.split(":").map((x) => x.trim());
+				acc[key] = value;
+				return acc;
+			}, {});
+
+		const post = {
+			folder: postFolder,
+			title: frontMatter.title,
+			date: frontMatter.date,
+			tag: frontMatter.tag ? frontMatter.tag.split(",") : [],
+			content: content.split("---").slice(2).join("---"),
+		};
+
+		res.json(post);
 	} catch (error) {
 		res.status(500).json({ message: `parsing error: ${error.message}` });
+		console.log(error);
 	}
 }
 

@@ -7,38 +7,29 @@
 
         <!-- title and extra -->
         <div class="flex flex-col w-full mb-10 gap-4">
-          <p class="text-5xl font-bold">title</p>
+          <p class="text-5xl font-bold">{{ post.title }}</p>
           <div class="flex gap-2">
-            <span>author</span>
-            <span>1972</span>
+            <span>redeyes</span>
+            <span>-</span>
+            <span>{{ post.date }}</span>
           </div>
           <div class="flex gap-3 w-full">
-            <div class="tagBlock">tag</div>
-            <div class="tagBlock">sex</div>
-            <div class="tagBlock">tag</div>
+            <div class="tagBlock" v-for="tag in post.tag" :key="tag">{{ tag }}</div>
           </div>
         </div>
 
         <!-- main content -->
         <div class="mb-5">
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum." "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-          anim id est laborum."
+          {{ post.content }}
         </div>
 
         <!-- author description -->
         <div class="flex mb-5">
-          <div class="bg-blue-500 p-7 mr-4 rounded-full"></div>
+          <div class="flex mr-4 overflow-hidden w-20 rounded-full">
+            <img class="w-full h-full object-cover" src="/eye.png" alt="author logo" />
+          </div>
           <div class="flex flex-col gap-2 items-start justify-center">
-            <p>author</p>
+            <p>redeyes</p>
             <p>description...</p>
           </div>
         </div>
@@ -78,13 +69,20 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import axios from "axios";
 
 const route = useRoute();
 
+const postFolder = route.params.folder;
+
+const post = ref({});
+
 async function getPostData() {
-  console("get test");
+  const { data } = await axios.get(`https://notebook.o-r.kr/api/posts/${postFolder}`);
+
+  post.value = data;
 }
 
 onMounted(getPostData);
