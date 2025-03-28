@@ -1,27 +1,27 @@
-const express = require("express");
-const cors = require("cors");
-const postRoutes = require("./routes/postRoutes");
-const userRoutes = require("./routes/userRoutes");
+import express, { json } from "express";
+import cors from "cors";
+import postRouter from "./router/postRoute.js";
 
 const app = express();
 
 // CORS 설정
 app.use(
-  cors({
-    origin: ["https://notebook.o-r.kr", "http://localhost:5173"],
-    methods: ["GET", "POST", "DELETE", "PUT"],
-  })
+	cors({
+		origin: ["https://notebook.o-r.kr", "http://localhost:5173"],
+		methods: ["GET", "POST", "DELETE", "PUT"],
+	})
 );
 
 // JSON 파싱 미들웨어
-app.use(express.json());
+app.use(json());
 
-// 라우트 설정
-app.use("/api/posts", postRoutes);
-app.use("/api/user", userRoutes);
+/*
+  JSON 파싱 미들웨어:
+  json 형식의 요청을 받아 그걸 javascript 객체로 변환해줌
+*/
 
-// 서버 시작
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`Server is running on port ${PORT}`);
+app.use("/api/posts", postRouter);
+
+app.listen(5000, "127.0.0.1", () => {
+	console.log(`Server is running on port 5000`);
 });
