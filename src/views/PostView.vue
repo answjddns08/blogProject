@@ -82,17 +82,9 @@ import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const folder = route.params.folder;
 
 async function getPostData() {
-  /* try {
-    const modules = import.meta.glob(`/src/posts/${folder}/*.md`, {
-      query: "?raw",
-      import: "default",
-    });
-  } catch (error) {
-    console.error(error);
-  } */
+  console("get test");
 }
 
 onMounted(getPostData);
