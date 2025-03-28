@@ -4,7 +4,7 @@
       <div class="flex relative mb-10">
         <!-- <div class="sortMenu">sort by...</div> -->
       </div>
-      <RouterLink class="postContainer" v-for="post in test" :key="post">
+      <RouterLink class="postContainer" to="/" v-for="post in posts" :key="post">
         <div class="postImageBlock">
           <font-awesome-icon
             :icon="['fas', 'image']"
@@ -12,19 +12,19 @@
             class="absolute top-2/5 left-2/5"
           />
         </div>
-        <div class="px-3 py-1 flex flex-col h-full justify-between">
-          <span class="text-2xl font-bold">{{ post.frontmatter.title }}</span>
+        <div class="px-3 py-1 flex flex-col h-full w-full justify-between">
+          <span class="text-2xl font-bold">{{ post.title }}</span>
           <span class="flex text-gray-700">
             {{ post.content.slice(0, 100) }}
           </span>
-          <div class="flex gap-3 w-full">
-            <div class="tagBlock" v-for="tag in post.frontmatter.tag" :key="tag">
+          <div class="flex gap-3">
+            <div class="tagBlock" v-for="tag in post.tag" :key="tag">
               {{ tag }}
             </div>
           </div>
           <div class="flex gap-1.5 justify-between text-gray-500">
             <div>
-              <span>redeyes - {{ post.frontmatter.date }}</span>
+              <span>redeyes - {{ post.date }}</span>
             </div>
             <div class="mr-2 text-sm">
               <span>? comments</span>
@@ -41,10 +41,12 @@ import { ref, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import axios from "axios";
 
-//const posts = ref([]);
+const posts = ref([]);
 
 async function getPosts() {
-  const data = await axios.get("/api/posts");
+  const { data } = await axios.get("https://notebook.o-r.kr/api/posts/");
+
+  posts.value = data;
 
   console.log(data);
 }
@@ -55,33 +57,6 @@ onMounted(getPosts);
   src 폴더에 있는 blog 폴더에 있는 폴더(포스트)들을 읽음
   폴더들에서 md 파일들을 불러옴
 */
-
-const test = ref([
-  {
-    frontmatter: {
-      title: "title",
-      tag: ["tag1", "tag2"],
-      date: "2021-09-01",
-    },
-    content: "content",
-  },
-  {
-    frontmatter: {
-      title: "title",
-      tag: ["tag1", "tag2"],
-      date: "2021-09-01",
-    },
-    content: "content",
-  },
-  {
-    frontmatter: {
-      title: "title",
-      tag: ["tag1", "tag2"],
-      date: "2021-09-01",
-    },
-    content: "content",
-  },
-]);
 </script>
 
 <style scoped>
