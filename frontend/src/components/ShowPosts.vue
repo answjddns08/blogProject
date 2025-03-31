@@ -6,8 +6,8 @@
       </div>
       <RouterLink
         class="postContainer"
-        :to="`/posts/${post.folder}`"
         v-for="post in posts"
+        :to="`/posts/${post.folder}`"
         :key="post"
       >
         <div class="postImageBlock">
@@ -15,6 +15,13 @@
             :icon="['fas', 'image']"
             size="2xl"
             class="absolute top-2/5 left-2/5"
+            v-if="!post.coverImg"
+          />
+          <img
+            :src="getImageUrl(post.folder, post.coverImg)"
+            alt="cover img"
+            class="w-full h-full object-cover"
+            v-else
           />
         </div>
         <div class="px-3 py-1 flex flex-col h-full w-full justify-between">
@@ -46,8 +53,22 @@ import { ref, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import axios from "axios";
 
+/* 
+axios.defaults.withCredentials = true; */
+
 const posts = ref([]);
 
+/**
+ * return image url
+ * @param {string} folder
+ * @param {string} image
+ */
+const getImageUrl = (postFolder, imageName) => {
+  if (!imageName) return null;
+  return `https://notebook.o-r.kr/api/posts/images/${postFolder}/${imageName}`;
+};
+
+/** get Posts */
 async function getPosts() {
   const { data } = await axios.get("https://notebook.o-r.kr/api/posts/");
 
@@ -55,11 +76,6 @@ async function getPosts() {
 }
 
 onMounted(getPosts);
-
-/*
-  src 폴더에 있는 blog 폴더에 있는 폴더(포스트)들을 읽음
-  폴더들에서 md 파일들을 불러옴
-*/
 </script>
 
 <style scoped>
@@ -114,6 +130,8 @@ onMounted(getPosts);
 
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
+
+  overflow: hidden;
 
   width: 8.5rem;
   flex-shrink: 0;

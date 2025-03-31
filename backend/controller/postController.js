@@ -29,6 +29,12 @@ async function getPosts(req, res) {
             그리고 그 밑에 있는 것들은 content로 만들어서 반환
         */
 
+		/*
+			커버 이미지랑 content에서 인용된 사진들을 따로 보내야 함
+			cover: cover.img
+			images: []
+		*/
+
 		if (folders.length == 0) {
 			res.status(404).json({ message: "No posts found" });
 			return;
@@ -55,6 +61,7 @@ async function getPosts(req, res) {
 					date: frontMatter.date,
 					tag: frontMatter.tag ? frontMatter.tag.split(",") : [],
 					content: content.split("---").slice(2).join("---"),
+					coverImg: frontMatter.coverImg || null,
 				};
 			})
 		);
@@ -103,6 +110,7 @@ async function getPost(req, res) {
 			date: frontMatter.date,
 			tag: frontMatter.tag ? frontMatter.tag.split(",") : [],
 			content: content.split("---").slice(2).join("---"),
+			coverImg: frontMatter.coverImg || null,
 		};
 
 		res.json(post);

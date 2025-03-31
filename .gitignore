@@ -14,7 +14,7 @@ dist-ssr
 coverage
 *.local
 
-posts/*
+posts/
 
 /cypress/videos/
 /cypress/screenshots/
@@ -30,3 +30,4 @@ posts/*
 *.sw?
 
 *.tsbuildinfo
+
