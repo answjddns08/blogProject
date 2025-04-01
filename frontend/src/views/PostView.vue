@@ -24,15 +24,7 @@
         </div>
 
         <!-- author description -->
-        <div class="flex mb-5">
-          <div class="flex mr-4 overflow-hidden w-20 rounded-full">
-            <img class="w-full h-full object-cover" src="/eye.png" alt="author logo" />
-          </div>
-          <div class="flex flex-col gap-2 items-start justify-center">
-            <p>redeyes</p>
-            <p>description...</p>
-          </div>
-        </div>
+        <AuthorDes />
 
         <!-- other posts -->
         <div class="bg-gray-400 rounded-lg flex flex-col w-full p-3 mb-5">
@@ -72,6 +64,7 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
+import AuthorDes from "@/components/authorDes.vue";
 
 const route = useRoute();
 
