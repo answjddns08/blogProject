@@ -72,6 +72,7 @@ async function getPosts() {
     params: {
       search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
     },
+    withCredentials: true,
   });
 
   posts.value = data;
