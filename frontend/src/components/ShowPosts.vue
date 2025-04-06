@@ -49,14 +49,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { RouterLink } from "vue-router";
+import { ref, onMounted, watch } from "vue";
+import { RouterLink, useRoute } from "vue-router";
 import axios from "axios";
 
-/* 
-axios.defaults.withCredentials = true; */
-
 const posts = ref([]);
+
+const route = useRoute();
 
 /**
  * return image url
@@ -64,18 +63,23 @@ const posts = ref([]);
  * @param {string} image
  */
 const getImageUrl = (postFolder, imageName) => {
-  if (!imageName) return null;
   return `https://notebook.o-r.kr/api/posts/images/${postFolder}/${imageName}`;
 };
 
 /** get Posts */
 async function getPosts() {
-  const { data } = await axios.get("https://notebook.o-r.kr/api/posts/");
+  const { data } = await axios.get("https://notebook.o-r.kr/api/posts/", {
+    params: {
+      search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
+    },
+  });
 
   posts.value = data;
 }
 
 onMounted(getPosts);
+
+watch(route, getPosts);
 </script>
 
 <style scoped>

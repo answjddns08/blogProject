@@ -11,13 +11,17 @@ const POSTS_DIR = path.join(__dirname, "..", "posts");
 
 /**
  * get posts from post directory
- * @param {*} req - request
- * @param {*} res - response
- * @returns posts from post directory
+ * @param {import("express").Request} req - request
+ * @param {import("express").Response} res - response
+ * @returns {Promise<void>} posts from post directory
  */
 async function getPosts(req, res) {
 	try {
 		const folders = await fs.readdir(POSTS_DIR);
+
+		const search = req.query.search ? req.query.search : null;
+
+		console.log("the query is " + search);
 
 		/*
             post 디렉토리에 있는 폴더(포스트)들을 읽어옴
@@ -75,8 +79,8 @@ async function getPosts(req, res) {
 
 /**
  * Get specific post by folder
- * @param {*} req - request with post folder in params
- * @param {*} res - response
+ * @param {import("express").Request} req - request
+ * @param {import("express").Response} res - response
  */
 async function getPost(req, res) {
 	try {

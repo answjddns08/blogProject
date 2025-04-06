@@ -7,8 +7,15 @@ const app = express();
 // CORS 설정
 app.use(
 	cors({
-		origin: ["https://notebook.o-r.kr", "http://localhost:5173"],
+		origin: [
+			"https://notebook.o-r.kr",
+			"http://localhost:5173",
+			"http://192.168.35.11", // 개발 환경 IP
+			"http://192.168.35.11:5173", // 개발 서버 IP
+		],
 		methods: ["GET", "POST", "DELETE", "PUT"],
+		allowedHeaders: ["Content-Type", "Authorization"],
+		credentials: true,
 	})
 );
 

@@ -5,15 +5,26 @@
       <RouterLink class="hover:text-blue-500 transition font-bold text-4xl" to="/"
         >Kellog</RouterLink
       >
-      <div class="flex gap-5 bg-gray-300 rounded-lg p-3">
+      <form class="flex gap-5 bg-gray-300 rounded-lg p-3" @submit.prevent="search">
+        <label
+          for="default-search"
+          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+          >Search</label
+        >
         <input
+          type="search"
           class="bg-white rounded-lg p-2 text-sm outline-0"
+          id="default-search"
           placeholder="search something..."
+          v-model="searchForm"
         />
-        <button class="bg-blue-500 rounded-lg p-2 text-sm hover:bg-blue-700 transition w-9 h-9">
+        <button
+          type="submit"
+          class="bg-blue-500 rounded-lg p-2 text-sm hover:bg-blue-700 transition w-9 h-9"
+        >
           <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
         </button>
-      </div>
+      </form>
     </div>
 
     <!-- right elements -->
@@ -28,7 +39,19 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { RouterLink, useRouter } from "vue-router";
+
+const router = useRouter();
+
+const searchForm = ref("");
+
+function search() {
+  router.push({ path: "/", query: { search: searchForm.value } });
+}
+
+//TODO: 검색 기능 구현
+//TODO: 태그를 누르면 검색창에 tag가 입력되고 tag가 있는 포스트만 보여주기
 </script>
 
 <style scoped>
@@ -42,6 +65,7 @@ import { RouterLink } from "vue-router";
   background: rgba(0, 0, 0, 0.4);
   z-index: 10;
 }
+
 /* modal or popup */
 .modal-container {
   position: relative;

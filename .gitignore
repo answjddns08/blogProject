@@ -29,5 +29,7 @@ posts/
 *.sln
 *.sw?
 
+.prettierignore
+
 *.tsbuildinfo
 
