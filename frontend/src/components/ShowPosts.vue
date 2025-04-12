@@ -2,7 +2,7 @@
   <div class="flex justify-center">
     <div class="flex flex-col">
       <div class="flex relative mb-10">
-        <!-- <div class="sortMenu">sort by...</div> -->
+        <ShowTags />
       </div>
       <RouterLink
         class="postContainer"
@@ -52,6 +52,7 @@
 import { ref, onMounted, watch } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import axios from "axios";
+import ShowTags from "./showTags.vue";
 
 const posts = ref([]);
 

@@ -1,14 +1,11 @@
 <template>
-  <main class="flex justify-between">
-    <showTags />
+  <main>
     <ShowPosts />
-    <p>sort Menu</p>
   </main>
 </template>
 
 <script setup>
 import ShowPosts from "@/components/ShowPosts.vue";
-import showTags from "@/components/showTags.vue";
 </script>
 
 <style scoped>

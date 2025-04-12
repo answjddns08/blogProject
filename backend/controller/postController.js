@@ -56,14 +56,14 @@ async function getPosts(req, res) {
 				searchTerms.forEach((term) => {
 					if (term.startsWith("#")) {
 						// 태그 검색
-						console.log("tag search: " + term);
+						//console.log("tag search: " + term);
 						const cleanTerm = term.slice(1).toLowerCase(); // '#' 제거
 						if (post.tag.some((tag) => tag.toLowerCase().includes(cleanTerm))) {
 							tagMatch = true;
 						}
 					} else {
 						// 제목 검색
-						console.log("normal search: " + term);
+						//console.log("normal search: " + term);
 						if (post.title.toLowerCase().includes(term.toLowerCase())) {
 							titleMatch = true;
 						}
