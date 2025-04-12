@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import bringPosts from "../functions/getPosts.js";
 
 // 현재 파일의 디렉토리 경로를 가져옴
 const __filename = fileURLToPath(import.meta.url);
@@ -17,11 +18,7 @@ const POSTS_DIR = path.join(__dirname, "..", "posts");
  */
 async function getPosts(req, res) {
 	try {
-		const folders = await fs.readdir(POSTS_DIR);
-
 		const search = req.query.search ? req.query.search : null;
-
-		console.log("the query is " + search);
 
 		/*
             post 디렉토리에 있는 폴더(포스트)들을 읽어옴
@@ -39,36 +36,49 @@ async function getPosts(req, res) {
 			images: []
 		*/
 
-		if (folders.length == 0) {
-			res.status(404).json({ message: "No posts found" });
+		/*
+			검색어가 있을 경우(search 값이 있을 경우)
+			제목에서 검색어가 포함된 포스트를 찾음
+			그리고 #tag로 되어 있을 경우 특정 태그를 찾을 수 있도록 해야 함
+			쉼표(,)로 각 검색할 내용을 분리함
+			각각의 검색어가 들어있는 것들을 찾음(태그 검색도 포함)
+			검색어가 없으면 포스트를 가져오지 않음
+		*/
+
+		const posts = await bringPosts();
+
+		if (search) {
+			const searchTerms = search.split(",").map((term) => term.trim());
+			const filteredPosts = posts.filter((post) => {
+				let titleMatch;
+				let tagMatch;
+
+				searchTerms.forEach((term) => {
+					if (term.includes("#")) {
+						console.log("tag search:" + term);
+						tagMatch = post.tag.some((tag) =>
+							searchTerms.some((term) => tag.toLowerCase().includes(term))
+						);
+					} else {
+						console.log("normal search: " + term);
+						titleMatch = post.title.toLowerCase().includes(term.toLowerCase());
+						if (titleMatch) {
+							return true;
+						}
+					}
+				});
+
+				/* const titleMatch = post.title
+					.toLowerCase()
+					.includes(searchTerms[0].toLowerCase());
+				const tagMatch = post.tag.some((tag) =>
+					searchTerms.some((term) => tag.toLowerCase().includes(term))
+				); */
+				return titleMatch || tagMatch;
+			});
+			res.json(filteredPosts);
 			return;
 		}
-
-		const posts = await Promise.all(
-			folders.map(async (folder) => {
-				const indexPath = path.join(POSTS_DIR, folder, "index.md");
-				const content = await fs.readFile(indexPath, "utf-8");
-
-				const frontMatter = content
-					.split("---")[1]
-					.split("\n")
-					.filter((line) => line)
-					.reduce((acc, line) => {
-						const [key, value] = line.split(":").map((x) => x.trim());
-						acc[key] = value;
-						return acc;
-					}, {});
-
-				return {
-					folder: folder,
-					title: frontMatter.title,
-					date: frontMatter.date,
-					tag: frontMatter.tag ? frontMatter.tag.split(",") : [],
-					content: content.split("---").slice(2).join("---"),
-					coverImg: frontMatter.coverImg || null,
-				};
-			})
-		);
 
 		res.json(posts);
 	} catch (error) {

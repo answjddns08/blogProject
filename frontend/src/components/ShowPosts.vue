@@ -57,6 +57,8 @@ const posts = ref([]);
 
 const route = useRoute();
 
+axios.defaults.withCredentials = true;
+
 /**
  * return image url
  * @param {string} folder
@@ -72,7 +74,6 @@ async function getPosts() {
     params: {
       search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
     },
-    withCredentials: true,
   });
 
   posts.value = data;
@@ -114,8 +115,8 @@ watch(route, getPosts);
 
   display: flex;
 
-  width: 40rem;
-  height: 10rem;
+  width: 43.5rem;
+  height: 11.25rem;
 
   border-radius: 1rem;
 
@@ -138,7 +139,7 @@ watch(route, getPosts);
 
   overflow: hidden;
 
-  width: 8.5rem;
+  width: 9.5rem;
   flex-shrink: 0;
 }
 

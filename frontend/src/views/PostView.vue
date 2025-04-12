@@ -66,6 +66,8 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 import AuthorDes from "@/components/authorDes.vue";
 
+axios.defaults.withCredentials = true;
+
 const route = useRoute();
 
 const postFolder = route.params.folder;

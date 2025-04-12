@@ -1,18 +1,14 @@
 import express, { json } from "express";
 import cors from "cors";
 import postRouter from "./router/postRoute.js";
+import tagRouter from "./router/tagRoute.js";
 
 const app = express();
 
 // CORS 설정
 app.use(
 	cors({
-		origin: [
-			"https://notebook.o-r.kr",
-			"http://localhost:5173",
-			"http://192.168.35.11", // 개발 환경 IP
-			"http://192.168.35.11:5173", // 개발 서버 IP
-		],
+		origin: ["https://notebook.o-r.kr", "http://localhost:5173"],
 		methods: ["GET", "POST", "DELETE", "PUT"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
@@ -26,6 +22,8 @@ app.use(json());
   JSON 파싱 미들웨어:
   json 형식의 요청을 받아 그걸 javascript 객체로 변환해줌
 */
+
+app.use("/api/tags", tagRouter);
 
 app.use("/api/posts", postRouter);
 

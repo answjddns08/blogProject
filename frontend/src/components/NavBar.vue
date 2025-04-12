@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center p-1 border border-gray-300">
+  <div class="flex justify-between items-center p-1">
     <!-- left elements -->
     <div class="flex px-10 gap-10 items-center">
       <RouterLink class="hover:text-blue-500 transition font-bold text-4xl" to="/"
