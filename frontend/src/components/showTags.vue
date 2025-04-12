@@ -2,25 +2,39 @@
   <div class="flex ml-10 mt-8 flex-col">
     <h1 class="text-3xl font-bold mb-3">Tag List</h1>
     <div class="flex flex-col gap-2 ml-2.5">
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
-      <button># test</button>
+      <button v-for="tag in tags" :key="tag" @click="searchTag(tag)">
+        {{ tag }}
+      </button>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import axios from "axios";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const tags = ref([]);
+
+const router = useRouter();
+
+async function getTags() {
+  const { data } = await axios.get("https://notebook.o-r.kr/api/tags/");
+
+  tags.value = data;
+}
+
+function searchTag(tag) {
+  router.push({ path: "/", query: { search: "#" + tag } });
+}
+
+onMounted(getTags);
+</script>
 
 <style scoped>
 button {
-  background-color: #f3f4f6;
+  background-color: #c6c6c6;
   border-radius: 0.5rem;
   padding: 0.5rem;
   color: #4b5563;
@@ -30,7 +44,7 @@ button {
 }
 
 button:hover {
-  background-color: #c6c9cd;
+  background-color: #94969a;
   cursor: pointer;
 }
 </style>

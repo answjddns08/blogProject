@@ -50,7 +50,6 @@ function search() {
   router.push({ path: "/", query: { search: searchForm.value } });
 }
 
-//TODO: 검색 기능 구현
 //TODO: 태그를 누르면 검색창에 tag가 입력되고 tag가 있는 포스트만 보여주기
 </script>
 

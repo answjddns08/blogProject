@@ -9,6 +9,20 @@ const __dirname = path.dirname(__filename);
 // posts 디렉토리의 절대 경로
 const POSTS_DIR = path.join(__dirname, "..", "posts");
 
+/**
+ * post type
+ * @typedef {Object} Post
+ * @property {string} folder - post folder name
+ * @property {string} title - post title
+ * @property {string} date - post date
+ * @property {Array<string>} tag - post tags
+ * @property {string} content - post content
+ * @property {string} coverImg - post cover image
+ */
+
+/**
+ * @returns {Promise<Post>} posts from post directory
+ */
 async function getPosts() {
 	try {
 		// posts 디렉토리에 있는 폴더(포스트)들을 읽어옴
@@ -24,17 +38,23 @@ async function getPosts() {
 				const indexPath = path.join(POSTS_DIR, folder, "index.md");
 				const content = await fs.readFile(indexPath, "utf-8");
 
-				const frontMatter = content.split("---")[1].trim();
-				const [id, title, date, tag] = frontMatter
+				const frontMatter = content
+					.split("---")[1]
 					.split("\n")
-					.map((line) => line.split(": ")[1]);
+					.filter((line) => line)
+					.reduce((acc, line) => {
+						const [key, value] = line.split(":").map((x) => x.trim());
+						acc[key] = value;
+						return acc;
+					}, {});
 
 				return {
-					id,
-					title,
-					date,
-					tag: tag ? tag.split(", ") : [],
-					content: content.split("---")[2].trim(),
+					folder: folder,
+					title: frontMatter.title,
+					date: frontMatter.date,
+					tag: frontMatter.tag.split(",").map((tag) => tag.trim()),
+					content: content.split("---").slice(2).join("---"),
+					coverImg: frontMatter.coverImg || null,
 				};
 			})
 		);
