@@ -44,6 +44,7 @@
           </div>
         </div>
       </RouterLink>
+      <p v-if="posts.length == 0" class="">흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
     </div>
   </div>
 </template>
@@ -86,6 +87,16 @@ watch(route, getPosts);
 </script>
 
 <style scoped>
+p {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+
+  font-size: 2rem;
+  line-height: 1.75rem;
+}
+
 .sortMenu {
   position: absolute;
 
