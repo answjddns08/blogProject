@@ -27,19 +27,16 @@
         <div class="px-3 py-1 flex flex-col h-full w-full justify-between">
           <span class="text-2xl font-bold">{{ post.title }}</span>
           <span class="flex text-gray-700">
-            {{ post.content.slice(0, 100) }}
+            {{ post.summary.slice(0, 100) }}
           </span>
           <div class="flex gap-3">
             <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
               {{ tag }}
             </div>
           </div>
-          <div class="flex gap-1.5 justify-between text-gray-500">
+          <div class="flex gap-1.5 text-gray-500">
             <div>
               <span>redeyes - {{ post.date }}</span>
-            </div>
-            <div class="mr-2 text-sm">
-              <span>? comments</span>
             </div>
           </div>
         </div>
@@ -55,6 +52,20 @@ import { RouterLink, useRoute } from "vue-router";
 import axios from "axios";
 import ShowTags from "./showTags.vue";
 
+/**
+ * @typedef {Object} Post
+ * @property {string} title
+ * @property {string} summary
+ * @property {string} date
+ * @property {string} folder
+ * @property {string} coverImg
+ * @property {string[]} tag
+ * @property {string} content
+ */
+
+/**
+ * @type {Post[]}
+ */
 const posts = ref([]);
 
 const route = useRoute();
@@ -77,8 +88,6 @@ async function getPosts() {
       search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
     },
   });
-
-  console.log(data);
 
   posts.value = data;
 }
