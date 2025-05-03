@@ -30,7 +30,7 @@
             {{ post.content.slice(0, 100) }}
           </span>
           <div class="flex gap-3">
-            <div class="tagBlock" v-for="tag in post.tag" :key="tag">
+            <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
               {{ tag }}
             </div>
           </div>
@@ -44,7 +44,7 @@
           </div>
         </div>
       </RouterLink>
-      <p v-if="posts.length == 0" class="">흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
+      <p v-if="posts.length == 0">흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
     </div>
   </div>
 </template>
@@ -77,6 +77,8 @@ async function getPosts() {
       search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
     },
   });
+
+  console.log(data);
 
   posts.value = data;
 }

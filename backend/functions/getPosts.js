@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import yaml from "js-yaml";
 
 // 현재 파일의 디렉토리 경로를 가져옴
 const __filename = fileURLToPath(import.meta.url);
@@ -16,17 +17,21 @@ const POSTS_DIR = path.join(__dirname, "..", "posts");
  * @property {string} title - post title
  * @property {string} date - post date
  * @property {Array<string>} tag - post tags
+ * @property {string} summary - post summary
  * @property {string} content - post content
  * @property {string} coverImg - post cover image
  */
 
 /**
- * @returns {Promise<Post>} posts from post directory
+ * get posts from post directory
+ * @param {string} targetFolder - target folder name
+ * @returns {Promise<Array<Post>>} posts from post directory (if targetFolder is not null, return only the target folder)
  */
-async function getPosts() {
+async function getPosts(targetFolder) {
 	try {
 		// posts 디렉토리에 있는 폴더(포스트)들을 읽어옴
-		const folders = await fs.readdir(POSTS_DIR);
+
+		const folders = targetFolder ? [targetFolder] : await fs.readdir(POSTS_DIR);
 
 		if (folders.length === 0) {
 			return [];
@@ -38,22 +43,16 @@ async function getPosts() {
 				const indexPath = path.join(POSTS_DIR, folder, "index.md");
 				const content = await fs.readFile(indexPath, "utf-8");
 
-				const frontMatter = content
-					.split("---")[1]
-					.split("\n")
-					.filter((line) => line)
-					.reduce((acc, line) => {
-						const [key, value] = line.split(":").map((x) => x.trim());
-						acc[key] = value;
-						return acc;
-					}, {});
+				const yamlContent = content.split("---")[1];
+				const frontMatter = yaml.load(yamlContent);
 
 				return {
 					folder: folder,
 					title: frontMatter.title,
 					date: frontMatter.date,
-					tag: frontMatter.tag.split(",").map((tag) => tag.trim()),
-					content: content.split("---").slice(2).join("---"),
+					tag: frontMatter.tag,
+					summary: frontMatter.summary || "",
+					content: content.split("---").slice(2).join("---").trim(),
 					coverImg: frontMatter.coverImg || null,
 				};
 			})

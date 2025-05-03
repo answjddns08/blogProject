@@ -3,7 +3,7 @@
     <div class="fixed">
       <h1 class="text-3xl font-bold mb-3">Tag List</h1>
       <div class="flex flex-col gap-2 ml-2.5">
-        <button v-for="tag in tags" :key="tag" @click="searchTag(tag)">
+        <button v-for="tag in tags" :key="tag" @click="searchTag(tag)" v-show="tag">
           {{ tag }}
         </button>
       </div>

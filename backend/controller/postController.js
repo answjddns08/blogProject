@@ -90,44 +90,20 @@ async function getPosts(req, res) {
  * @param {import("express").Request} req - request
  * @param {import("express").Response} res - response
  *
- * @returns {Promise<Array<import("../functions/getPosts.js").Post>>} posts from post directory
+ * @returns {Promise<import("../functions/getPosts.js").Post>} posts from post directory
  */
 async function getPost(req, res) {
 	try {
 		const postFolder = req.params.folder;
 
-		const postPath = path.join(POSTS_DIR, postFolder);
+		const post = await bringPosts(postFolder);
 
-		const folder = await fs.readdir(postPath);
-
-		if (folder.length == 0) {
-			res.status(404).json({ message: "No post found" });
+		if (!post) {
+			res.status(404).json({ message: "Post not found" });
 			return;
 		}
 
-		const indexPath = path.join(postPath, "index.md");
-		const content = await fs.readFile(indexPath, "utf-8");
-
-		const frontMatter = content
-			.split("---")[1]
-			.split("\n")
-			.filter((line) => line)
-			.reduce((acc, line) => {
-				const [key, value] = line.split(":").map((x) => x.trim());
-				acc[key] = value;
-				return acc;
-			}, {});
-
-		const post = {
-			folder: postFolder,
-			title: frontMatter.title,
-			date: frontMatter.date,
-			tag: frontMatter.tag ? frontMatter.tag.split(",") : [],
-			content: content.split("---").slice(2).join("---"),
-			coverImg: frontMatter.coverImg || null,
-		};
-
-		res.json(post);
+		res.json(post[0]);
 	} catch (error) {
 		res.status(500).json({ message: `parsing error: ${error.message}` });
 		console.log(error);

@@ -14,7 +14,14 @@
             <span>{{ post.date }}</span>
           </div>
           <div class="flex gap-3 w-full">
-            <div class="tagBlock" v-for="tag in post.tag" :key="tag">{{ tag }}</div>
+            <RouterLink
+              :to="{ path: '/', query: { search: '#' + tag } }"
+              class="tagBlock"
+              v-for="tag in post.tag"
+              v-show="tag"
+              :key="tag"
+              >{{ tag }}</RouterLink
+            >
           </div>
         </div>
 
@@ -62,7 +69,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, RouterLink } from "vue-router";
 import axios from "axios";
 import AuthorDes from "@/components/authorDes.vue";
 
@@ -72,6 +79,20 @@ const route = useRoute();
 
 const postFolder = route.params.folder;
 
+/**
+ * post type
+ * @typedef {Object} Post
+ * @property {string} folder - post folder name
+ * @property {string} title - post title
+ * @property {string} date - post date
+ * @property {Array<string>} tag - post tags
+ * @property {string} content - post content
+ * @property {string} coverImg - post cover image
+ */
+
+/**
+ * @type {Post}
+ */
 const post = ref({});
 
 async function getPostData() {
