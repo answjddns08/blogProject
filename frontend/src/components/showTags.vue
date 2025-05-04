@@ -75,13 +75,13 @@ button:hover {
   cursor: pointer;
 }
 
-button:active {
-  background-color: #7a7c80;
-  color: white;
-}
-
 button:focus {
   outline: none;
   box-shadow: 0 0 0 0.15rem #4b5563;
+}
+
+button.active {
+  background-color: #4b5563;
+  color: white;
 }
 </style>

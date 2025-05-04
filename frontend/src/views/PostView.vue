@@ -26,9 +26,7 @@
         </div>
 
         <!-- main content -->
-        <div class="mb-5">
-          {{ post.content }}
-        </div>
+        <div class="mb-5" v-html="post.content"></div>
 
         <!-- author description -->
         <AuthorDes />
@@ -72,6 +70,7 @@ import { onMounted, ref } from "vue";
 import { useRoute, RouterLink } from "vue-router";
 import axios from "axios";
 import AuthorDes from "@/components/authorDes.vue";
+import { marked } from "marked";
 
 axios.defaults.withCredentials = true;
 
@@ -99,6 +98,11 @@ async function getPostData() {
   const { data } = await axios.get(`https://notebook.o-r.kr/api/posts/${postFolder}`);
 
   post.value = data;
+
+  post.value.content = marked(data.content, {
+    gfm: true,
+    breaks: true,
+  });
 }
 
 onMounted(getPostData);
@@ -106,14 +110,25 @@ onMounted(getPostData);
 
 <style scoped>
 .tagBlock {
-  border-width: 1px;
+  border-width: 0.1rem;
 
-  padding-inline: 0.35rem;
+  padding-inline: 0.45rem;
+
+  font-weight: 500;
+
+  font-size: 1.25rem;
 
   border-radius: 0.5rem;
 }
 
 .tagBlock::before {
-  content: "# ";
+  content: "#";
+  padding-right: 0.5rem;
+}
+
+.tagBlock:hover {
+  background-color: #c6c6c6;
+  color: #4b5563;
+  transition: ease-out 0.25s;
 }
 </style>
