@@ -47,10 +47,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { onMounted, watch } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import axios from "axios";
 import ShowTags from "./showTags.vue";
+import { usePostStore } from "@/stores/postStore";
 
 /**
  * @typedef {Object} Post
@@ -66,9 +67,9 @@ import ShowTags from "./showTags.vue";
 /**
  * @type {Post[]}
  */
-const posts = ref([]);
 
 const route = useRoute();
+const postStore = usePostStore();
 
 axios.defaults.withCredentials = true;
 
@@ -89,12 +90,14 @@ async function getPosts() {
     },
   });
 
-  posts.value = data;
+  postStore.setPosts(data);
 }
 
 onMounted(getPosts);
 
 watch(route, getPosts);
+
+const posts = postStore.posts;
 </script>
 
 <style scoped>

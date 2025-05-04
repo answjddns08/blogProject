@@ -32,24 +32,15 @@
         <AuthorDes />
 
         <!-- other posts -->
-        <div class="bg-gray-400 rounded-lg flex flex-col w-full p-3 mb-5">
-          <p>다른 글</p>
-          <div class="flex w-full justify-between">
-            <p>- option</p>
-            <p>1972년 7월 11일</p>
-          </div>
-          <div class="flex w-full justify-between">
-            <p>- option</p>
-            <p>1972년 7월 11일</p>
-          </div>
-          <div class="flex w-full justify-between">
-            <p>- option</p>
-            <p>1972년 7월 11일</p>
-          </div>
-          <div class="flex w-full justify-between">
-            <p>- option</p>
-            <p>1972년 7월 11일</p>
-          </div>
+        <div class="flex justify-between w-full py-3 gap-3 mb-5">
+          <button class="postButton">
+            <font-awesome-icon :icon="['fas', 'arrow-left']" />
+            <span>Previous Post</span>
+          </button>
+          <button class="postButton justify-end">
+            <span>Next Post</span>
+            <font-awesome-icon :icon="['fas', 'arrow-right']" />
+          </button>
         </div>
 
         <!-- comments panel -->
@@ -130,5 +121,26 @@ onMounted(getPostData);
   background-color: #c6c6c6;
   color: #4b5563;
   transition: ease-out 0.25s;
+}
+
+.postButton {
+  display: flex;
+
+  flex: 1;
+
+  align-items: center;
+
+  gap: 0.5rem;
+  padding: 0.5rem;
+
+  border-width: 0.15rem;
+  border-radius: 0.5rem;
+
+  transition: ease-out 0.25s;
+}
+
+.postButton:hover {
+  background-color: #c6c6c6;
+  color: #1c2129;
 }
 </style>
