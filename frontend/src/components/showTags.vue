@@ -3,7 +3,13 @@
     <div class="fixed">
       <h1 class="text-3xl font-bold mb-3">Tag List</h1>
       <div class="flex flex-col gap-2 ml-2.5">
-        <button v-for="tag in tags" :key="tag" @click="searchTag(tag)" v-show="tag">
+        <button
+          v-for="tag in tags"
+          :key="tag"
+          @click="toggleTag(tag)"
+          :class="{ active: selectedTag === tag }"
+          v-show="tag"
+        >
           {{ tag }}
         </button>
       </div>
@@ -18,17 +24,23 @@ import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const tags = ref([]);
+const selectedTag = ref(null);
 
 const router = useRouter();
 
 async function getTags() {
   const { data } = await axios.get("https://notebook.o-r.kr/api/tags/");
-
   tags.value = data;
 }
 
-function searchTag(tag) {
-  router.push({ path: "/", query: { search: "#" + tag } });
+function toggleTag(tag) {
+  if (selectedTag.value === tag) {
+    selectedTag.value = null;
+    router.push({ path: "/", query: {} });
+  } else {
+    selectedTag.value = tag;
+    router.push({ path: "/", query: { search: "#" + tag } });
+  }
 }
 
 onMounted(getTags);
@@ -38,11 +50,8 @@ onMounted(getTags);
 .tagBox {
   display: flex;
   flex-direction: column;
-
   position: absolute;
-
   left: -13.5rem;
-
   margin-top: 1.5rem;
 }
 
@@ -54,7 +63,6 @@ button {
   font-weight: 700;
   font-size: 0.875rem;
   transition: ease-out 0.25s;
-
   font-size: medium;
 }
 
@@ -65,5 +73,15 @@ button::before {
 button:hover {
   background-color: #94969a;
   cursor: pointer;
+}
+
+button:active {
+  background-color: #7a7c80;
+  color: white;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.15rem #4b5563;
 }
 </style>

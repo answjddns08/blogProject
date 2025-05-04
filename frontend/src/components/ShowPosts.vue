@@ -27,7 +27,7 @@
         <div class="px-3 py-1 flex flex-col h-full w-full justify-between">
           <span class="text-2xl font-bold">{{ post.title }}</span>
           <span class="flex text-gray-700">
-            {{ post.summary.slice(0, 100) }}
+            {{ post.summary.slice(0, 115) }}
           </span>
           <div class="flex gap-3">
             <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
