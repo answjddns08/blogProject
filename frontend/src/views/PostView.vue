@@ -33,14 +33,27 @@
 
         <!-- other posts -->
         <div class="flex justify-between w-full py-3 gap-3 mb-5">
-          <button class="postButton" @click="navigateToPost(previousPost)">
+          <!-- Previous Post Button -->
+          <button
+            class="postButton"
+            :class="{ 'disabled-button': !previousPost }"
+            @click="navigateToPost(previousPost)"
+            :disabled="!previousPost"
+          >
             <font-awesome-icon :icon="['fas', 'arrow-left']" size="2xl" />
             <div class="flex flex-col">
               <span>Previous Post</span>
               <span>{{ previousPost ? previousPost.title : "No Previous Post" }}</span>
             </div>
           </button>
-          <button class="postButton justify-end" @click="navigateToPost(nextPost)">
+
+          <!-- Next Post Button -->
+          <button
+            class="postButton justify-end"
+            :class="{ 'disabled-button': !nextPost }"
+            @click="navigateToPost(nextPost)"
+            :disabled="!nextPost"
+          >
             <div class="flex flex-col">
               <span>Next Post</span>
               <span>{{ nextPost ? nextPost.title : "No Next Post" }}</span>
@@ -173,5 +186,15 @@ watch(
 .postButton:hover {
   background-color: #c6c6c6;
   color: #1c2129;
+}
+
+.postButton:disabled {
+  pointer-events: none;
+}
+
+.disabled-button {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
 }
 </style>
