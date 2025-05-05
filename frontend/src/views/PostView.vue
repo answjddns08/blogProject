@@ -33,13 +33,19 @@
 
         <!-- other posts -->
         <div class="flex justify-between w-full py-3 gap-3 mb-5">
-          <button class="postButton">
-            <font-awesome-icon :icon="['fas', 'arrow-left']" />
-            <span>Previous Post</span>
+          <button class="postButton" @click="navigateToPost(previousPost)">
+            <font-awesome-icon :icon="['fas', 'arrow-left']" size="2xl" />
+            <div class="flex flex-col">
+              <span>Previous Post</span>
+              <span>{{ previousPost ? previousPost.title : "No Previous Post" }}</span>
+            </div>
           </button>
-          <button class="postButton justify-end">
-            <span>Next Post</span>
-            <font-awesome-icon :icon="['fas', 'arrow-right']" />
+          <button class="postButton justify-end" @click="navigateToPost(nextPost)">
+            <div class="flex flex-col">
+              <span>Next Post</span>
+              <span>{{ nextPost ? nextPost.title : "No Next Post" }}</span>
+            </div>
+            <font-awesome-icon :icon="['fas', 'arrow-right']" size="2xl" />
           </button>
         </div>
 
@@ -57,17 +63,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRoute, RouterLink } from "vue-router";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, RouterLink, useRouter } from "vue-router";
 import axios from "axios";
 import AuthorDes from "@/components/authorDes.vue";
 import { marked } from "marked";
+import { usePostStore } from "@/stores/postStore";
 
 axios.defaults.withCredentials = true;
 
 const route = useRoute();
+const router = useRouter();
 
-const postFolder = route.params.folder;
+const postStore = usePostStore();
 
 /**
  * post type
@@ -85,8 +93,17 @@ const postFolder = route.params.folder;
  */
 const post = ref({});
 
-async function getPostData() {
-  const { data } = await axios.get(`https://notebook.o-r.kr/api/posts/${postFolder}`);
+const previousPost = ref(null);
+const nextPost = ref(null);
+
+function navigateToPost(post) {
+  if (!post) return;
+
+  router.push({ path: `/posts/${post.folder}` });
+}
+
+async function getPostData(folder) {
+  const { data } = await axios.get(`https://notebook.o-r.kr/api/posts/${folder}`);
 
   post.value = data;
 
@@ -94,9 +111,23 @@ async function getPostData() {
     gfm: true,
     breaks: true,
   });
+
+  postStore.setCurrentPostId(folder);
+
+  previousPost.value = postStore.previousPost;
+  nextPost.value = postStore.nextPost;
 }
 
-onMounted(getPostData);
+onMounted(async () => {
+  await getPostData(route.params.folder);
+});
+
+watch(
+  () => route.params.folder,
+  async (newFolder) => {
+    await getPostData(newFolder);
+  }
+);
 </script>
 
 <style scoped>
