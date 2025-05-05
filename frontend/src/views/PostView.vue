@@ -63,13 +63,13 @@
         </div>
 
         <!-- comments panel -->
-        <div class="flex flex-col items-end gap-5">
+        <!-- <div class="flex flex-col items-end gap-5">
           <input
             class="w-full bg-gray-400 rounded-lg p-4 outline-0"
             placeholder="login before type some comment"
           />
           <button class="bg-blue-500 p-3 rounded-lg">post</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>
