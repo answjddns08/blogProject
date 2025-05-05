@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import PostView from "@/views/PostView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import aboutView from "@/views/aboutView.vue";
+import NotFoundView from "@/views/notFoundView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,15 @@ const router = createRouter({
       path: "/register",
       name: "register",
       component: RegisterView,
+    },
+    {
+      path: "/404",
+      name: "notFound",
+      component: NotFoundView,
+    },
+    {
+      path: "/:patchMatch(.*)*",
+      redirect: "/404",
     },
   ],
 });
