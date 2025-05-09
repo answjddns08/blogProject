@@ -24,10 +24,10 @@
             v-else
           />
         </div>
-        <div class="px-3 py-1 flex flex-col h-full w-full justify-between">
+        <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
           <span class="text-2xl font-bold">{{ post.title }}</span>
-          <span class="flex text-gray-700">
-            {{ post.summary.slice(0, 115) }}
+          <span class="flex grow text-gray-700">
+            {{ post.summary.slice(0, 110) }}
           </span>
           <div class="flex gap-3">
             <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
@@ -137,9 +137,9 @@ p {
 }
 
 .postContainer {
-  background-color: #c8c8c8;
-
   display: flex;
+
+  align-items: center;
 
   width: 43.5rem;
   height: 11.25rem;
@@ -152,7 +152,7 @@ p {
 }
 
 .postContainer:hover {
-  background-color: #858585;
+  background-color: #efefef;
 }
 
 .postImageBlock {
@@ -160,17 +160,20 @@ p {
 
   position: relative;
 
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+  border-radius: 1rem;
 
   overflow: hidden;
 
-  width: 9.5rem;
+  width: 10rem;
+  height: 10rem;
+
   flex-shrink: 0;
 }
 
 .tagBlock {
   border-width: 1px;
+
+  font-size: 1rem;
 
   padding-inline: 0.25rem;
 
