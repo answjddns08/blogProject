@@ -160,12 +160,12 @@ p {
 
   position: relative;
 
-  border-radius: 1rem;
+  border-radius: 0.75rem;
 
   overflow: hidden;
 
-  width: 10rem;
-  height: 10rem;
+  width: 11.25rem;
+  height: 11.25rem;
 
   flex-shrink: 0;
 }

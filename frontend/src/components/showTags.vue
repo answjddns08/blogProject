@@ -1,18 +1,14 @@
 <template>
   <div class="tagBox">
     <div class="fixed">
-      <h1 class="text-3xl font-bold mb-3">Tag List</h1>
-      <div class="flex flex-col gap-2 ml-2.5">
-        <button
-          v-for="tag in tags"
-          :key="tag"
-          @click="toggleTag(tag)"
-          :class="{ active: selectedTag === tag }"
-          v-show="tag"
-        >
-          {{ tag }}
-        </button>
-      </div>
+      <h1 class="text-2xl font-bold mb-3">Tag List</h1>
+      <ul class="list-disc gap-2 ml-2.5">
+        <li v-for="tag in tags" :key="tag" v-show="tag">
+          <button @click="toggleTag(tag)" :class="{ active: selectedTag === tag }">
+            {{ tag }}
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -56,32 +52,29 @@ onMounted(getTags);
 }
 
 button {
-  background-color: #c6c6c6;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  color: #4b5563;
-  font-weight: 700;
-  font-size: 0.875rem;
-  transition: ease-out 0.25s;
-  font-size: medium;
+  background: none;
+  border: none;
+  color: #000;
+
+  cursor: pointer;
+
+  font-size: 1.125rem;
+  font-weight: 550;
+
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  color: #007bff;
+
+  text-decoration: underline;
 }
 
 button::before {
   content: "# ";
 }
 
-button:hover {
-  background-color: #94969a;
-  cursor: pointer;
-}
-
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 0.15rem #4b5563;
-}
-
 button.active {
-  background-color: #4b5563;
-  color: white;
+  color: #007bff;
 }
 </style>
