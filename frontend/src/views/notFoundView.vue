@@ -1,8 +1,10 @@
 <template>
   <main class="flex flex-col items-center">
-    <div class="flex items-center gap-x-1.5 text-7xl font-bold">
+    <div class="flex gap-x-3 text-7xl font-bold">
       <span>4</span>
-      <span class="loading_circle"></span>
+      <svg class="svg-spinner" viewBox="0 0 50 50">
+        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+      </svg>
       <span>4</span>
     </div>
     <p class="text-lg mt-4">Page Not Found</p>
@@ -10,27 +12,38 @@
 </template>
 
 <script setup></script>
+
 <style scoped>
-.loading_circle {
+.svg-spinner {
   width: 4rem;
   height: 4rem;
-  border-radius: 50%;
-
-  border: 0.6rem solid transparent;
-
-  border-top-color: #000;
-
-  animation: loading 1s ease infinite;
-
-  /* margin: 0 0.5rem; */
+  animation: rotate 2s linear infinite;
 }
 
-@keyframes loading {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
+.path {
+  stroke: #000;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: -124;
   }
 }
 </style>
