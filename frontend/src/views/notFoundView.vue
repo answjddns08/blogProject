@@ -1,13 +1,20 @@
 <template>
-  <main class="flex flex-col items-center">
-    <div class="flex gap-x-3 text-7xl font-bold">
+  <main class="flex flex-col items-center mt-10 gap-2">
+    <div class="flex gap-x-3 text-8xl font-bold">
       <span>4</span>
-      <svg class="svg-spinner" viewBox="0 0 50 50">
-        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+      <svg class="svg-spinner" viewBox="0 0 100 100">
+        <circle class="path" cx="50" cy="50" r="40" fill="none" stroke-width="10"></circle>
       </svg>
       <span>4</span>
     </div>
-    <p class="text-lg mt-4">Page Not Found</p>
+    <p class="text-2xl mt-4 font-bold">Page Not Found</p>
+
+    <p class="text-gray-500 mt-2">The page you are looking for does not exist.</p>
+    <p class="text-gray-500 mt-2">You can go back to the home page.</p>
+
+    <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded" @click="$router.push('/')">
+      Go to Home
+    </button>
   </main>
 </template>
 
@@ -15,8 +22,11 @@
 
 <style scoped>
 .svg-spinner {
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
+
+  margin-top: 1rem;
+
   animation: rotate 2s linear infinite;
 }
 
@@ -34,16 +44,36 @@
 
 @keyframes dash {
   0% {
-    stroke-dasharray: 1, 150;
+    stroke-dasharray: 1, 300;
     stroke-dashoffset: 0;
   }
   50% {
-    stroke-dasharray: 90, 150;
+    stroke-dasharray: 200, 300;
     stroke-dashoffset: -35;
   }
   100% {
-    stroke-dasharray: 1, 150;
-    stroke-dashoffset: -124;
+    stroke-dasharray: 1, 300;
+    stroke-dashoffset: -240;
   }
+}
+
+button {
+  cursor: pointer;
+
+  font-size: 1rem;
+  font-weight: bold;
+
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+
+  color: white;
+  background-color: #3b82f6;
+
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2563eb;
 }
 </style>
