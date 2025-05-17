@@ -1,8 +1,9 @@
 <template>
   <div class="flex justify-center">
-    <div class="flex flex-col">
+    <div class="flex flex-col mr-20">
       <div class="flex relative mb-10">
         <ShowTags />
+        <AuthorField />
       </div>
       <RouterLink
         class="postContainer"
@@ -14,7 +15,7 @@
           <font-awesome-icon
             :icon="['fas', 'image']"
             size="2xl"
-            class="absolute top-2/5 left-2/5"
+            class="absolute m-auto top-0 left-0 right-0 bottom-0"
             v-if="!post.coverImg"
           />
           <img
@@ -52,6 +53,7 @@ import { RouterLink, useRoute } from "vue-router";
 import axios from "axios";
 import ShowTags from "./showTags.vue";
 import { usePostStore } from "@/stores/postStore";
+import AuthorField from "./authorField.vue";
 
 /**
  * @typedef {Object} Post
@@ -141,7 +143,7 @@ p {
 
   align-items: center;
 
-  width: 43.5rem;
+  width: 47rem;
   height: 11.25rem;
 
   border-radius: 1rem;
@@ -152,7 +154,7 @@ p {
 }
 
 .postContainer:hover {
-  background-color: #efefef;
+  background-color: #dcdcdc;
 }
 
 .postImageBlock {

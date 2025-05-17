@@ -1,0 +1,57 @@
+<template>
+  <div class="author-field">
+    <div class="bg-image-container"><img src="/background.png" class="object-cover" /></div>
+    <div class="author-image-container">
+      <img src="/eye.png" class="object-cover" />
+    </div>
+
+    <div class="flex flex-col gap-2 items-center justify-center">
+      <p>redeyes</p>
+      <p>눈(snow)이 너무 빨감</p>
+      <div class="flex gap-5 justify-between">
+        <a href="https://github.com/answjddns08" target="_blank">
+          <font-awesome-icon :icon="['fab', 'github']" class="border-2 p-2 rounded-lg" size="2xl" />
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup></script>
+
+<style scoped>
+.author-field {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  right: -27.5rem;
+}
+
+.bg-image-container {
+  width: 25rem;
+  height: 15rem;
+
+  border-radius: 0.75rem;
+  background-color: #aaaaaa;
+
+  overflow: hidden;
+}
+
+.author-image-container {
+  width: 6rem;
+  height: 6rem;
+
+  margin-top: -3rem;
+
+  border-radius: 50%;
+
+  background-color: #ed0000;
+
+  overflow: hidden;
+
+  z-index: 1;
+}
+</style>
