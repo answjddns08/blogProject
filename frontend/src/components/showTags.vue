@@ -46,9 +46,14 @@ onMounted(getTags);
 .tagBox {
   display: flex;
   flex-direction: column;
+
   position: absolute;
-  left: -13.5rem;
-  margin-top: 1.5rem;
+
+  right: 100%;
+
+  margin-right: 15rem;
+
+  margin-top: 3.5rem;
 }
 
 button {

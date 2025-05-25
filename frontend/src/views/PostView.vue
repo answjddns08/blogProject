@@ -25,6 +25,8 @@
           </div>
         </div>
 
+        <HeadingList />
+
         <!-- main content -->
         <div class="mb-5" v-html="post.content"></div>
 
@@ -82,6 +84,7 @@ import axios from "axios";
 import AuthorDes from "@/components/authorDes.vue";
 import { marked } from "marked";
 import { usePostStore } from "@/stores/postStore";
+import HeadingList from "@/components/HeadingList.vue";
 
 axios.defaults.withCredentials = true;
 
