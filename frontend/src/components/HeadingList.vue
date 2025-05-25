@@ -1,7 +1,7 @@
 <template>
   <div class="relative mb-5">
-    <div v-if="headings.length" class="block">
-      <p v-for="heading in headings.headings" :key="heading">
+    <div v-if="headings.headings.length" class="block">
+      <p v-for="heading in headings.headings" :class="`h${heading.depth}`" :key="heading">
         {{ heading.tokens[0].text }}
       </p>
     </div>
@@ -44,5 +44,25 @@ watch(
   line-height: 1.5;
 
   border-left: 2px solid #000;
+}
+
+.h2 {
+  margin-left: 0.75rem;
+}
+
+.h3 {
+  margin-left: 1.5rem;
+}
+
+.h4 {
+  margin-left: 2.25rem;
+}
+
+.h5 {
+  margin-left: 3rem;
+}
+
+.h6 {
+  margin-left: 3.75rem;
 }
 </style>
