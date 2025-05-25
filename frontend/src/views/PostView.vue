@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <HeadingList />
+        <HeadingList :headings="{ headings }" />
 
         <!-- main content -->
         <div class="mb-5" v-html="post.content"></div>
@@ -112,6 +112,8 @@ const post = ref({});
 const previousPost = ref(null);
 const nextPost = ref(null);
 
+const headings = ref([]);
+
 function navigateToPost(post) {
   if (!post) return;
 
@@ -123,7 +125,18 @@ async function getPostData(folder) {
 
   post.value = data;
 
+  const renderer = new marked.Renderer();
+
+  renderer.heading = function ({ tokens, depth }) {
+    headings.value.push({ tokens, depth });
+
+    return `<h${depth} id="${this.parser.parseInline(tokens)}" >${this.parser.parseInline(
+      tokens
+    )}</h${depth}>`;
+  };
+
   post.value.content = marked(data.content, {
+    renderer,
     gfm: true,
     breaks: true,
   });

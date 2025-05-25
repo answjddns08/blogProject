@@ -1,15 +1,33 @@
 <template>
   <div class="relative mb-5">
-    <div class="block">
-      <p>hello world!</p>
-      <p>hello world!</p>
-      <p>hello world!</p>
-      <p>hello world!</p>
+    <div v-if="headings.length" class="block">
+      <p v-for="heading in headings.headings" :key="heading">
+        {{ heading.tokens[0].text }}
+      </p>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { watch } from "vue";
+
+const props = defineProps({
+  headings: {
+    Type: Array(Object),
+    default: {},
+  },
+});
+
+console.log(props.headings);
+
+watch(
+  () => props.headings,
+  () => {
+    console.log("changed!");
+  },
+  { deep: true }
+);
+</script>
 
 <style scoped>
 .block {
