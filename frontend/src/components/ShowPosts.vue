@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import axios from "axios";
 import ShowTags from "./showTags.vue";
@@ -75,10 +75,12 @@ const postStore = usePostStore();
 
 axios.defaults.withCredentials = true;
 
+const posts = ref([]);
+
 /**
  * return image url
- * @param {string} folder
- * @param {string} image
+ * @param {string} postFolder
+ * @param {string} imageName
  */
 const getImageUrl = (postFolder, imageName) => {
   return `https://notebook.o-r.kr/api/posts/images/${postFolder}/${imageName}`;
@@ -86,20 +88,40 @@ const getImageUrl = (postFolder, imageName) => {
 
 /** get Posts */
 async function getPosts() {
-  const { data } = await axios.get("https://notebook.o-r.kr/api/posts/", {
-    params: {
-      search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
-    },
-  });
+  console.log("getPosts");
 
-  postStore.setPosts(data);
+  console.log(postStore.posts);
+
+  if (route.query.search || !postStore.posts.length) {
+    console.log("searching!");
+
+    const { data } = await axios.get("https://notebook.o-r.kr/api/posts/", {
+      params: {
+        search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
+      },
+    });
+
+    if (route.query.search) {
+      console.log("searching, so don't save");
+      posts.value = data;
+      return;
+    } else {
+      // no posts data in postStore
+      console.log("Not searching, so saving posts");
+      postStore.setPosts(data);
+    }
+  }
+
+  posts.value = postStore.posts;
 }
 
 onMounted(getPosts);
 
 watch(route, getPosts);
 
-const posts = postStore.posts;
+watch(route.query.search, getPosts, {
+  immediate: true,
+});
 </script>
 
 <style scoped>
