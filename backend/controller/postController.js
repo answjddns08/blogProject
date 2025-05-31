@@ -45,7 +45,8 @@ async function getPosts(req, res) {
 	try {
 		const search = req.query.search ? req.query.search : null;
 
-		const posts = await bringPosts();
+		// 여러 개의 포스트를 불러올 때는 content 제외
+		const posts = await bringPosts(null, true);
 
 		if (search) {
 			const searchTerms = search.split(",").map((term) => term.trim());

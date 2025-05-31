@@ -11,23 +11,33 @@ const __dirname = path.dirname(__filename);
 const POSTS_DIR = path.join(__dirname, "..", "posts");
 
 /**
- * post type
- * @typedef {Object} Post
+ * post type for list view (excludeContent = true)
+ * @typedef {Object} PostListItem
  * @property {string} folder - post folder name
  * @property {string} title - post title
  * @property {string} date - post date
  * @property {Array<string>} tag - post tags
  * @property {string} summary - post summary
- * @property {string} content - post content
  * @property {string} coverImg - post cover image
+ */
+
+/**
+ * post type for detail view (excludeContent = false)
+ * @typedef {Object} PostDetail
+ * @property {string} folder - post folder name
+ * @property {string} title - post title
+ * @property {string} date - post date
+ * @property {Array<string>} tag - post tags
+ * @property {string} content - post content
  */
 
 /**
  * get posts from post directory
  * @param {string} targetFolder - target folder name
- * @returns {Promise<Array<Post>>} posts from post directory (if targetFolder is not null, return only the target folder)
+ * @param {boolean} excludeContent - exclude content from posts (default: false)
+ * @returns {Promise<Array<PostListItem|PostDetail>>} posts from post directory (if targetFolder is not null, return only the target folder)
  */
-async function getPosts(targetFolder) {
+async function getPosts(targetFolder, excludeContent = false) {
 	try {
 		// posts 디렉토리에 있는 폴더(포스트)들을 읽어옴
 
@@ -46,15 +56,23 @@ async function getPosts(targetFolder) {
 				const yamlContent = content.split("---")[1];
 				const frontMatter = yaml.load(yamlContent);
 
-				return {
+				const postData = {
 					folder: folder,
 					title: frontMatter.title,
 					date: frontMatter.date,
-					tag: frontMatter.tag,
-					summary: frontMatter.summary || "",
-					content: content.split("---").slice(2).join("---").trim(),
-					coverImg: frontMatter.coverImg || null,
+					tag: frontMatter.tag || [],
 				};
+
+				if (excludeContent) {
+					// 포스트 목록용: summary와 coverImg 포함, content 제외
+					postData.summary = frontMatter.summary || "";
+					postData.coverImg = frontMatter.coverImg || null;
+				} else {
+					// 개별 포스트용: content 포함, summary와 coverImg 제외
+					postData.content = content.split("---").slice(2).join("---").trim();
+				}
+
+				return postData;
 			})
 		);
 
