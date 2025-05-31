@@ -123,6 +123,8 @@ function navigateToPost(post) {
 async function getPostData(folder) {
   const { data } = await axios.get(`https://notebook.o-r.kr/api/posts/${folder}`);
 
+  headings.value = [];
+
   post.value = data;
 
   const renderer = new marked.Renderer();
@@ -154,6 +156,7 @@ onMounted(async () => {
 watch(
   () => route.params.folder,
   async (newFolder) => {
+    window.scrollTo(0, 0);
     await getPostData(newFolder);
   }
 );
