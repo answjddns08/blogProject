@@ -1,10 +1,12 @@
 <template>
   <div class="tagBox">
     <div class="fixed">
-      <h1 class="text-2xl font-bold mb-3">Tag List</h1>
+      <div class="header">
+        <h1 class="text-2xl font-bold">Tag List</h1>
+      </div>
       <ul class="list-disc gap-2 ml-2.5">
-        <li v-for="tag in tags" :key="tag" v-show="tag">
-          <button @click="toggleTag(tag)" :class="{ active: selectedTag === tag }">
+        <li v-for="tag in tagStore.filteredTags" :key="tag" v-show="tag">
+          <button @click="handleTagClick(tag)" :class="{ active: tagStore.selectedTag === tag }">
             {{ tag }}
           </button>
         </li>
@@ -14,32 +16,31 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import axios from "axios";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useTagStore } from "@/stores/tagStore";
 
-const tags = ref([]);
-const selectedTag = ref(null);
-
+const tagStore = useTagStore();
 const router = useRouter();
 
-async function getTags() {
-  const { data } = await axios.get("https://notebook.o-r.kr/api/tags/");
-  tags.value = data;
-}
+function handleTagClick(tag) {
+  tagStore.toggleTag(tag);
 
-function toggleTag(tag) {
-  if (selectedTag.value === tag) {
-    selectedTag.value = null;
-    router.push({ path: "/", query: {} });
-  } else {
-    selectedTag.value = tag;
+  if (tagStore.selectedTag === tag) {
     router.push({ path: "/", query: { search: "#" + tag } });
+    tagStore.toggleTag(tag); // 선택된 태그를 해제
+  } else {
+    router.push({ path: "/", query: {} });
   }
 }
 
-onMounted(getTags);
+onMounted(async () => {
+  try {
+    await tagStore.initializeTags();
+  } catch (error) {
+    console.error("Failed to initialize tags:", error);
+  }
+});
 </script>
 
 <style scoped>
@@ -54,6 +55,13 @@ onMounted(getTags);
   margin-right: 15rem;
 
   margin-top: 3.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 button {

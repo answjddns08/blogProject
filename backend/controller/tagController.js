@@ -1,12 +1,4 @@
-import { promises as fs } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import bringPosts from "../functions/getPosts.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const POSTS_DIR = path.join(__dirname, "..", "posts");
 
 /*
     디렉토리에서 포스트들을 가져오고

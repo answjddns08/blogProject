@@ -102,12 +102,10 @@ async function getPosts() {
     });
 
     if (route.query.search) {
-      console.log("searching, so don't save");
       posts.value = data;
       return;
     } else {
       // no posts data in postStore
-      console.log("Not searching, so saving posts");
       postStore.setPosts(data);
     }
   }
