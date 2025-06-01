@@ -26,9 +26,9 @@ const router = useRouter();
 function handleTagClick(tag) {
   tagStore.toggleTag(tag);
 
-  if (tagStore.selectedTag === tag) {
-    router.push({ path: "/", query: { search: "#" + tag } });
-    tagStore.toggleTag(tag); // 선택된 태그를 해제
+  // toggle 후의 상태로 라우팅 결정
+  if (tagStore.selectedTag) {
+    router.push({ path: "/", query: { search: "#" + tagStore.selectedTag } });
   } else {
     router.push({ path: "/", query: {} });
   }
@@ -37,6 +37,8 @@ function handleTagClick(tag) {
 onMounted(async () => {
   try {
     await tagStore.initializeTags();
+
+    console.log("Tags initialized successfully:", tagStore.selectedTag);
   } catch (error) {
     console.error("Failed to initialize tags:", error);
   }
