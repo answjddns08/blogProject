@@ -49,13 +49,9 @@ onMounted(async () => {
 .tagBox {
   display: flex;
   flex-direction: column;
-
   position: absolute;
-
   right: 100%;
-
   margin-right: 15rem;
-
   margin-top: 3.5rem;
 }
 
@@ -66,22 +62,26 @@ onMounted(async () => {
   margin-bottom: 0.75rem;
 }
 
+.header h1 {
+  color: var(--text-primary);
+  margin: 0;
+}
+
 button {
   background: none;
   border: none;
-  color: #000;
-
+  color: var(--text-primary);
   cursor: pointer;
-
-  font-size: 1.125rem;
+  font-size: larger;
   font-weight: 550;
-
   transition: all 0.3s ease;
+  padding: 0rem 0.5rem;
+  border-radius: 4px;
 }
 
 button:hover {
-  color: #007bff;
-
+  color: var(--accent-color);
+  background-color: var(--bg-primary);
   text-decoration: underline;
 }
 
@@ -90,6 +90,18 @@ button::before {
 }
 
 button.active {
-  color: #007bff;
+  color: var(--accent-color);
+  background-color: var(--bg-primary);
+}
+
+/* 리스트 스타일 */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 0.25rem;
 }
 </style>

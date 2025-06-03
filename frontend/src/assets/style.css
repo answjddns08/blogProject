@@ -1,1 +1,64 @@
 @import "tailwindcss";
+
+/* 다크 모드 CSS 변수 */
+:root {
+  /* 라이트 모드 기본값 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --accent-color: #007bff;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* 라이트 모드 */
+.light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --accent-color: #007bff;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* 다크 모드 */
+.dark {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --border-color: #404040;
+  --accent-color: #4dabf7;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* 전역 스타일 적용 */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 기본 요소 스타일 */
+.card,
+.container,
+.box {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.border {
+  border-color: var(--border-color);
+}
+
+.accent {
+  color: var(--accent-color);
+}

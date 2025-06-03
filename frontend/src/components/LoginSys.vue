@@ -59,4 +59,66 @@ function modalOpen() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+/* dimmed */
+.modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+/* modal or popup */
+.modal-container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35rem;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 11;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.X-btn {
+  position: absolute;
+
+  cursor: pointer;
+
+  right: 0rem;
+
+  transition: all 0.2s ease;
+}
+
+.X-btn:hover {
+  color: aqua;
+}
+
+.modal-btn {
+  padding: 0.5rem;
+  width: 15rem;
+  height: 3.25rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
+  background-color: #2663e8;
+  transition: background-color 0.2s ease;
+
+  cursor: pointer;
+}
+
+.modal-btn:hover {
+  background-color: #1a4bb9; /* 호버 시 변경할 색상 */
+}
+</style>

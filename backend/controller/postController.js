@@ -1,14 +1,4 @@
-import { promises as fs } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import bringPosts from "../functions/getPosts.js";
-
-// 현재 파일의 디렉토리 경로를 가져옴
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// posts 디렉토리의 절대 경로
-const POSTS_DIR = path.join(__dirname, "..", "posts");
 
 /*
     post 디렉토리에 있는 폴더(포스트)들을 읽어옴
