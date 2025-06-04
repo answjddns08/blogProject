@@ -3,7 +3,7 @@
     <!-- left elements -->
     <div class="flex px-10 gap-10 items-center">
       <RouterLink class="buttons font-bold text-4xl" to="/">Kellog</RouterLink>
-      <form class="flex gap-3 bg-gray-400 rounded-lg p-2" @submit.prevent="search">
+      <form @submit.prevent="search">
         <label
           for="default-search"
           class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -70,10 +70,19 @@ function search() {
   color: var(--accent-color); /* Tailwind's blue-700 */
 }
 
+form {
+  display: flex;
+
+  gap: 0.75rem;
+
+  padding: 0.5rem;
+
+  border-bottom: 0.25rem solid var(--text-primary);
+}
+
 input {
   border-radius: 0.5rem;
 
-  background-color: var(--bg-secondary);
   color: var(--text-primary);
 
   padding: 0rem 0.25rem;
@@ -84,32 +93,32 @@ input {
 }
 
 .search-btn {
-  background-color: #3b82f6;
-  border-radius: 0.5rem;
   padding: 0.5rem;
   font-size: 0.875rem;
-  color: white;
+
+  color: var(--text-primary);
+
   transition: all 0.3s ease;
+
   flex-shrink: 0;
+
   aspect-ratio: 1;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   min-height: 2.25rem;
   min-width: 2.25rem;
+
+  border-radius: 50%;
+
   border: none;
   cursor: pointer;
 }
 
 .search-btn:hover {
-  background-color: #1d4ed8; /* blue-700 */
-}
-
-:global(.dark) .search-btn {
-  background-color: #2563eb; /* blue-600 */
-}
-
-:global(.dark) .search-btn:hover {
-  background-color: #1e40af; /* blue-800 */
+  background-color: var(--accent-color); /* blue-700 */
 }
 </style>
