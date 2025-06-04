@@ -167,14 +167,19 @@ p {
   height: 11.25rem;
 
   border-radius: 1rem;
+  border: 2px solid transparent;
 
   margin-bottom: 4rem;
 
-  transition: ease-out 0.25s;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .postContainer:hover {
   background-color: var(--border-color);
+  border: 2px solid var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--shadow);
 }
 
 .postImageBlock {
