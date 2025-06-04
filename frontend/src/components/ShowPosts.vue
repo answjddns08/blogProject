@@ -27,15 +27,15 @@
         </div>
         <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
           <span class="text-2xl font-bold">{{ post.title }}</span>
-          <span class="flex grow text-gray-700">
-            {{ post.summary.slice(0, 110) }}
+          <span class="flex grow">
+            {{ post.summary.slice(0, 115) }}
           </span>
           <div class="flex gap-3">
             <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
               {{ tag }}
             </div>
           </div>
-          <div class="flex gap-1.5 text-gray-500">
+          <div class="flex gap-1.5" style="color: var(--text-secondary)">
             <div>
               <span>redeyes - {{ post.date }}</span>
             </div>
@@ -174,7 +174,7 @@ p {
 }
 
 .postContainer:hover {
-  background-color: #dcdcdc;
+  background-color: var(--border-color);
 }
 
 .postImageBlock {
@@ -186,14 +186,20 @@ p {
 
   overflow: hidden;
 
-  width: 11.25rem;
-  height: 11.25rem;
+  margin-left: 0.625rem;
+
+  width: 10rem;
+  height: 10rem;
 
   flex-shrink: 0;
 }
 
 .tagBlock {
-  border-width: 1px;
+  border-width: 0.1rem;
+
+  border-color: var(--text-secondary);
+
+  color: var(--text-secondary);
 
   font-size: 1rem;
 
