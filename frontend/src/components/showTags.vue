@@ -69,20 +69,31 @@ onMounted(async () => {
 
 button {
   background: none;
+
   border: none;
+  border-radius: 4px;
+
   color: var(--text-primary);
+
   cursor: pointer;
+
   font-size: larger;
   font-weight: 550;
+
   transition: all 0.3s ease;
+
   padding: 0rem 0.5rem;
-  border-radius: 4px;
+
+  position: relative;
 }
 
 button:hover {
   color: var(--accent-color);
   background-color: var(--bg-primary);
+
   text-decoration: underline;
+
+  transform: translateY(-2px);
 }
 
 button::before {
