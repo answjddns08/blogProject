@@ -10,7 +10,7 @@
       <p>눈(snow)이 너무 빨감</p>
       <div class="flex gap-5 justify-between">
         <a href="https://github.com/answjddns08" target="_blank">
-          <font-awesome-icon :icon="['fab', 'github']" class="border-2 p-2 rounded-lg" size="2xl" />
+          <font-awesome-icon :icon="['fab', 'github']" class="icon" size="2xl" />
         </a>
       </div>
     </div>
@@ -53,5 +53,22 @@
   overflow: hidden;
 
   z-index: 1;
+}
+
+.icon {
+  border: 2px solid var(--text-primary);
+
+  border-radius: 0.5rem;
+
+  color: var(--text-primary);
+
+  padding: 0.5rem;
+
+  transition: all 0.3s ease;
+}
+
+.icon:hover {
+  background-color: var(--accent-color);
+  color: var(--text-primary);
 }
 </style>
