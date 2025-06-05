@@ -1,14 +1,14 @@
 <template>
   <main>
     <div class="flex w-full justify-center">
-      <div class="flex flex-col w-xl">
+      <div class="flex flex-col w-3xl">
         <!-- margin space -->
         <div class="mb-10"></div>
 
         <!-- title and extra -->
-        <div class="flex flex-col w-full mb-10 gap-4">
-          <p class="text-5xl font-bold">{{ post.title }}</p>
-          <div class="flex gap-2">
+        <div class="flex flex-col w-full mb-5 gap-4">
+          <span class="text-5xl font-bold">{{ post.title }}</span>
+          <div class="flex gap-2" style="color: var(--text-secondary)">
             <span>redeyes</span>
             <span>-</span>
             <span>{{ post.date }}</span>
@@ -28,7 +28,7 @@
         <HeadingList :headings="{ headings }" />
 
         <!-- main content -->
-        <div class="mb-5" v-html="post.content"></div>
+        <ShowContent :content="post.content" />
 
         <!-- author description -->
         <AuthorDes />
@@ -85,6 +85,7 @@ import AuthorDes from "@/components/authorDes.vue";
 import { marked } from "marked";
 import { usePostStore } from "@/stores/postStore";
 import HeadingList from "@/components/HeadingList.vue";
+import ShowContent from "@/components/showContent.vue";
 
 axios.defaults.withCredentials = true;
 
