@@ -120,7 +120,7 @@ watch(() => props.headings, () => {
 
   width: 15rem;
 
-  right: 6.25rem;
+  right: 8.125rem;
 
   padding: 0.25rem 0.75rem;
 

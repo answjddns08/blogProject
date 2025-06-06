@@ -71,7 +71,7 @@
 }
 
 .icon {
-  border: 2px solid var(--text-secondary);
+  border: 2px solid var(--border-color);
 
   border-radius: 0.5rem;
 
@@ -83,7 +83,7 @@
 }
 
 .icon:hover {
-  background-color: var(--text-secondary);
+  background-color: var(--border-color);
   color: var(--text-primary);
 }
 </style>
