@@ -14,71 +14,71 @@ const props = defineProps({
 </script>
 
 <style scoped>
-::v-deep p {
+:deep(p) {
   margin-bottom: 1rem;
 }
 
-::v-deep h1 {
+:deep(h1) {
   font-size: 2.25rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
   margin-top: 2rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
 
-::v-deep h2 {
+:deep(h2) {
   font-size: 1.875rem;
   font-weight: bold;
   margin-bottom: 1.25rem;
   margin-top: 1.75rem;
 }
 
-::v-deep h3 {
+:deep(h3) {
   font-size: 1.5rem;
   font-weight: semibold;
   margin-bottom: 1rem;
   margin-top: 1.5rem;
 }
 
-::v-deep h4 {
+:deep(h4) {
   font-size: 1.25rem;
   font-weight: semibold;
   margin-bottom: 0.75rem;
   margin-top: 1.25rem;
 }
 
-::v-deep h5 {
+:deep(h5) {
   font-size: 1.125rem;
   font-weight: semibold;
   margin-bottom: 0.5rem;
   margin-top: 1rem;
 }
 
-::v-deep h6 {
+:deep(h6) {
   font-size: 1rem;
   font-weight: semibold;
   margin-bottom: 0.5rem;
   margin-top: 1rem;
 }
 
-::v-deep ul {
+:deep(ul) {
   list-style-type: disc;
   margin-left: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-::v-deep ol {
+:deep(ol) {
   list-style-type: decimal;
   margin-left: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-::v-deep li {
+:deep(li) {
   margin-bottom: 0.5rem;
 }
 
-::v-deep blockquote {
+:deep(blockquote) {
   border-left: 4px solid #3b82f6;
   padding-left: 1rem;
   margin: 1.5rem 0;
@@ -88,7 +88,7 @@ const props = defineProps({
   border-radius: 0.5rem;
 }
 
-::v-deep code {
+:deep(code) {
   background-color: #f1f5f9;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
@@ -96,7 +96,7 @@ const props = defineProps({
   font-size: 0.875rem;
 }
 
-::v-deep pre {
+:deep(pre) {
   background-color: #1e293b;
   color: #e2e8f0;
   padding: 1rem;
@@ -105,47 +105,47 @@ const props = defineProps({
   margin: 1.5rem 0;
 }
 
-::v-deep pre code {
+:deep(pre code) {
   background-color: transparent;
   padding: 0;
   color: inherit;
 }
 
-::v-deep table {
+:deep(table) {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
 }
 
-::v-deep th,
-::v-deep td {
+:deep(th),
+:deep(td) {
   border: 1px solid #d1d5db;
   padding: 0.75rem;
   text-align: left;
 }
 
-::v-deep th {
+:deep(th) {
   background-color: #f9fafb;
   font-weight: semibold;
 }
 
-::v-deep img {
+:deep(img) {
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
   margin: 1rem 0;
 }
 
-::v-deep a {
+:deep(a) {
   color: #3b82f6;
   text-decoration: underline;
 }
 
-::v-deep a:hover {
+:deep(a:hover) {
   color: #1d4ed8;
 }
 
-::v-deep hr {
+:deep(hr) {
   border: none;
   border-top: 1px solid #e5e7eb;
   margin: 2rem 0;
