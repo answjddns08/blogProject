@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="flex w-full justify-center">
-      <div class="flex flex-col w-3xl">
+      <div class="flex flex-col w-1/2">
         <!-- margin space -->
         <div class="mb-10"></div>
 
@@ -13,7 +13,7 @@
             <span>-</span>
             <span>{{ post.date }}</span>
           </div>
-          <div class="flex gap-3 w-full">
+          <div class="flex gap-3">
             <RouterLink
               :to="{ path: '/', query: { search: '#' + tag } }"
               class="tagBlock"
@@ -167,11 +167,11 @@ watch(
 .tagBlock {
   border-width: 0.1rem;
 
-  padding-inline: 0.45rem;
+  padding-inline: 0.35rem;
 
   font-weight: 500;
 
-  font-size: 1.25rem;
+  font-size: 1rem;
 
   border-radius: 0.5rem;
 }
@@ -182,8 +182,7 @@ watch(
 }
 
 .tagBlock:hover {
-  background-color: #c6c6c6;
-  color: #4b5563;
+  background-color: var(--border-color);
   transition: ease-out 0.25s;
 }
 
