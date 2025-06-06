@@ -1,9 +1,8 @@
 <template>
-  <div class="mb-5" v-html="props.content"></div>
+  <div class="mb-20" v-html="props.content"></div>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 
 const props = defineProps({
   content: {

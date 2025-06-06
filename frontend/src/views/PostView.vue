@@ -133,9 +133,15 @@ async function getPostData(folder) {
   renderer.heading = function ({ tokens, depth }) {
     headings.value.push({ tokens, depth });
 
-    return `<h${depth} id="${this.parser.parseInline(tokens)}" >${this.parser.parseInline(
-      tokens
-    )}</h${depth}>`;
+    const headingText = this.parser.parseInline(tokens);
+    // ID를 위한 텍스트 정리 (공백을 하이픈으로, 특수문자 제거)
+    const headingId = headingText
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '') // 특수문자 제거
+      .replace(/\s+/g, '-') // 공백을 하이픈으로
+      .trim();
+
+    return `<h${depth} id="${headingId}">${headingText}</h${depth}>`;
   };
 
   post.value.content = marked(data.content, {
