@@ -7,12 +7,12 @@
       </svg>
       <span>4</span>
     </div>
-    <p class="text-2xl mt-4 font-bold">Page Not Found</p>
+    <p class="text-2xl mt-4 font-bold" style="color: var(--text-primary);">Page Not Found</p>
 
-    <p class="text-gray-500 mt-2">The page you are looking for does not exist.</p>
-    <p class="text-gray-500 mt-2">You can go back to the home page.</p>
+    <p class="mt-2" style="color: var(--text-secondary);">The page you are looking for does not exist.</p>
+    <p class="my-2" style="color: var(--text-secondary);">You can go back to the home page.</p>
 
-    <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded" @click="$router.push('/')">
+    <button @click="$router.push('/')">
       Go to Home
     </button>
   </main>
@@ -31,7 +31,7 @@
 }
 
 .path {
-  stroke: #000;
+  stroke: var(--text-primary);
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
 }
