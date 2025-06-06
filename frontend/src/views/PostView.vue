@@ -30,9 +30,6 @@
         <!-- main content -->
         <ShowContent :content="post.content" />
 
-        <!-- author description -->
-        <AuthorDes />
-
         <!-- other posts -->
         <div class="flex justify-between w-full py-3 gap-3 mb-5">
           <!-- Previous Post Button -->
@@ -81,7 +78,6 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute, RouterLink, useRouter } from "vue-router";
 import axios from "axios";
-import AuthorDes from "@/components/authorDes.vue";
 import { marked } from "marked";
 import { usePostStore } from "@/stores/postStore";
 import HeadingList from "@/components/HeadingList.vue";

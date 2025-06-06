@@ -5,9 +5,9 @@
       <img src="/eye.png" class="object-cover" />
     </div>
 
-    <div class="flex flex-col gap-2 items-center justify-center">
-      <p>redeyes</p>
-      <p>눈(snow)이 너무 빨감</p>
+    <div class="flex flex-col gap-3 items-center justify-center">
+      <p class="author">redeyes</p>
+      <p class="description">눈(snow)이 너무 빨감</p>
       <div class="flex gap-5 justify-between">
         <a href="https://github.com/answjddns08" target="_blank">
           <font-awesome-icon :icon="['fab', 'github']" class="icon" size="2xl" />
@@ -55,8 +55,23 @@
   z-index: 1;
 }
 
+.author {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.description {
+  color: var(--text-secondary);
+  
+  font-weight: 500;
+  font-size: 1rem;
+
+  margin-bottom: .5rem;
+}
+
 .icon {
-  border: 2px solid var(--text-primary);
+  border: 2px solid var(--text-secondary);
 
   border-radius: 0.5rem;
 
@@ -68,7 +83,7 @@
 }
 
 .icon:hover {
-  background-color: var(--accent-color);
+  background-color: var(--text-secondary);
   color: var(--text-primary);
 }
 </style>
