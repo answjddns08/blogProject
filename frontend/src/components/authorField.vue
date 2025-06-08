@@ -71,11 +71,7 @@
 }
 
 .icon {
-  border: 2px solid var(--border-color);
-
-  border-radius: 0.5rem;
-
-  color: var(--text-primary);
+  color: var(--text-secondary);
 
   padding: 0.5rem;
 
@@ -83,7 +79,8 @@
 }
 
 .icon:hover {
-  background-color: var(--border-color);
   color: var(--text-primary);
+  
+  scale: 1.2;
 }
 </style>
