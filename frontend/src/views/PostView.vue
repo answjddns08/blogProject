@@ -28,7 +28,11 @@
         <HeadingList :headings="{ headings }" />
 
         <!-- main content -->
-        <ShowContent :content="post.content" />
+        <ShowContent 
+          :content="post.content" 
+          :headings="headings"
+          @update:headings="headings = $event"
+        />
 
         <!-- other posts -->
         <div class="flex justify-between w-full py-3 gap-3 mb-5">
@@ -78,7 +82,6 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute, RouterLink, useRouter } from "vue-router";
 import axios from "axios";
-import { marked } from "marked";
 import { usePostStore } from "@/stores/postStore";
 import HeadingList from "@/components/HeadingList.vue";
 import ShowContent from "@/components/showContent.vue";
@@ -123,28 +126,6 @@ async function getPostData(folder) {
   headings.value = [];
 
   post.value = data;
-
-  const renderer = new marked.Renderer();
-
-  renderer.heading = function ({ tokens, depth }) {
-    headings.value.push({ tokens, depth });
-
-    const headingText = this.parser.parseInline(tokens);
-    // ID를 위한 텍스트 정리 (공백을 하이픈으로, 특수문자 제거)
-    const headingId = headingText
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '') // 특수문자 제거
-      .replace(/\s+/g, '-') // 공백을 하이픈으로
-      .trim();
-
-    return `<h${depth} id="${headingId}">${headingText}</h${depth}>`;
-  };
-
-  post.value.content = marked(data.content, {
-    renderer,
-    gfm: true,
-    breaks: true,
-  });
 
   postStore.setCurrentPostId(folder);
 

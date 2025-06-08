@@ -1,14 +1,53 @@
 <template>
-  <div class="mb-20" v-html="props.content"></div>
+  <div class="mb-20" v-html="renderedContent"></div>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { marked } from 'marked';
 
 const props = defineProps({
   content: {
     type: String,
     required: true,
   },
+  headings: {
+    type: Array,
+    required: true,
+  },
+});
+
+const emit = defineEmits(['update:headings']);
+
+const renderedContent = computed(() => {
+  const headingsArray = [];
+
+  const renderer = new marked.Renderer();
+
+  renderer.heading = function ({ tokens, depth }) {
+    headingsArray.push({ tokens, depth });
+
+    const headingText = this.parser.parseInline(tokens);
+    // ID를 위한 텍스트 정리 (공백을 하이픈으로, 특수문자 제거)
+    const headingId = headingText
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '') // 특수문자 제거
+      .replace(/\s+/g, '-') // 공백을 하이픈으로
+      .trim();
+
+    return `<h${depth} id="${headingId}">${headingText}</h${depth}>`;
+  };
+
+  const rendered = marked(props.content, {
+    renderer,
+    gfm: true,
+    breaks: true,
+  });
+
+  // headings 업데이트 emit
+  emit('update:headings', headingsArray);
+
+  return rendered;
 });
 </script>
 
@@ -78,17 +117,17 @@ const props = defineProps({
 }
 
 :deep(blockquote) {
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid var(--accent-color);
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
-  background-color: #f8fafc;
+  background-color: var(--border-color);
   padding: 1rem;
   border-radius: 0.5rem;
 }
 
 :deep(code) {
-  background-color: #f1f5f9;
+  background-color: var(--border-color);
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   font-family: "Courier New", monospace;
@@ -96,8 +135,8 @@ const props = defineProps({
 }
 
 :deep(pre) {
-  background-color: #1e293b;
-  color: #e2e8f0;
+  background-color: var(--border-color);
+  color: var(--text-secondary);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
