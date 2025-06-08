@@ -10,16 +10,23 @@ const props = defineProps({
   content: {
     type: String,
     required: true,
+    default: ''
   },
   headings: {
     type: Array,
-    required: true,
+    required: false,
+    default: () => []
   },
 });
 
 const emit = defineEmits(['update:headings']);
 
 const renderedContent = computed(() => {
+  // content가 없으면 빈 문자열 반환
+  if (!props.content) {
+    return '';
+  }
+
   const headingsArray = [];
 
   const renderer = new marked.Renderer();
@@ -136,7 +143,7 @@ const renderedContent = computed(() => {
 
 :deep(pre) {
   background-color: var(--border-color);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;

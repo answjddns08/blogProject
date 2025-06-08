@@ -29,10 +29,14 @@
 
         <!-- main content -->
         <ShowContent 
+          v-if="post.content"
           :content="post.content" 
           :headings="headings"
           @update:headings="headings = $event"
         />
+        <div v-else class="text-center py-10">
+          <p>로딩 중...</p>
+        </div>
 
         <!-- other posts -->
         <div class="flex justify-between w-full py-3 gap-3 mb-5">
@@ -107,7 +111,14 @@ const postStore = usePostStore();
 /**
  * @type {Post}
  */
-const post = ref({});
+const post = ref({
+  folder: '',
+  title: '',
+  date: '',
+  tag: [],
+  content: '',
+  coverImg: ''
+});
 
 const previousPost = ref(null);
 const nextPost = ref(null);
@@ -186,8 +197,8 @@ watch(
 }
 
 .postButton:hover {
-  background-color: #c6c6c6;
-  color: #1c2129;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .postButton:disabled {
@@ -195,8 +206,8 @@ watch(
 }
 
 .disabled-button {
-  background-color: #e0e0e0;
-  color: #a0a0a0;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
   cursor: not-allowed;
 }
 </style>
