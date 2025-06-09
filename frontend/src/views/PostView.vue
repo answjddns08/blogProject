@@ -6,7 +6,7 @@
         <div class="mb-10"></div>
 
         <!-- title and extra -->
-        <div class="flex flex-col w-full mb-5 gap-4">
+        <div class="flex flex-col w-full gap-4">
           <span class="text-5xl font-bold">{{ post.title }}</span>
           <div class="flex gap-2" style="color: var(--text-secondary)">
             <span>redeyes</span>
@@ -168,6 +168,8 @@ watch(
   font-size: 1rem;
 
   border-radius: 0.5rem;
+
+  transition: ease-out 0.25s;
 }
 
 .tagBlock::before {
@@ -176,8 +178,8 @@ watch(
 }
 
 .tagBlock:hover {
-  background-color: var(--border-color);
-  transition: ease-out 0.25s;
+  background-color: var(--shadow);
+  color: var(--accent-color);
 }
 
 .postButton {

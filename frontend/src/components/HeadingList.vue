@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mb-5">
+  <div class="relative">
     <div v-if="headings.headings.length" class="block">
       <button 
         v-for="(heading, index) in headings.headings" 

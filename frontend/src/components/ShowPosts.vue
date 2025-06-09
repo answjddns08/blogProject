@@ -169,7 +169,7 @@ p {
   border-radius: 1rem;
   border: 2px solid transparent;
 
-  margin-bottom: 4rem;
+  margin-bottom: 1.75rem;
 
   transition: all 0.3s ease;
   position: relative;
