@@ -76,7 +76,7 @@ const setupIntersectionObserver = () => {
       }
     },
     {
-      rootMargin: '-20% 0px -70% 0px', // 상단 20%, 하단 70% 여백으로 더 정확한 감지
+      rootMargin: '-10% 0px -80% 0px', // 상단 10%, 하단 80% 여백으로 더 정확한 감지
       threshold: 0.1
     }
   );
