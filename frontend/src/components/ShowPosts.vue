@@ -113,21 +113,9 @@ onMounted(getPosts);
 
 watch(route, () => {
   // when route changes, get posts again
-  //console.log("route changed, getPosts called");
+  console.log("route changed, getPosts called");
   getPosts();
 });
-
-watch(
-  route.query.search,
-  () => {
-    // when search query changes, get posts again
-    //console.log("search query changed, getPosts called");
-    getPosts();
-  },
-  {
-    immediate: true,
-  }
-);
 </script>
 
 <style scoped>

@@ -16,12 +16,13 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useTagStore } from "@/stores/tagStore";
 
 const tagStore = useTagStore();
 const router = useRouter();
+const route = useRoute()
 
 function handleTagClick(tag) {
   tagStore.toggleTag(tag);
@@ -38,11 +39,33 @@ onMounted(async () => {
   try {
     await tagStore.initializeTags();
 
-    //console.log("Tags initialized successfully:", tagStore.selectedTag);
+    // URL에서 초기 태그 상태 설정
+    const searchQuery = route.query.search;
+    if (searchQuery && searchQuery.startsWith('#')) {
+      const tagFromUrl = searchQuery.slice(1);
+      tagStore.selectedTag = tagFromUrl;
+    }
   } catch (error) {
     console.error("Failed to initialize tags:", error);
   }
 });
+
+watch(route, (newRoute) => {
+  
+  // URL 쿼리에서 선택된 태그 동기화
+  const searchQuery = newRoute.query.search;
+  if (searchQuery && searchQuery.startsWith('#')) {
+    const tagFromUrl = searchQuery.slice(1); // '#' 제거
+    if (tagStore.selectedTag !== tagFromUrl) {
+      tagStore.selectedTag = tagFromUrl;
+    }
+  } else {
+    // 검색 쿼리가 없거나 태그가 아닌 경우 선택 해제
+    if (tagStore.selectedTag) {
+      tagStore.selectedTag = null;
+    }
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>
