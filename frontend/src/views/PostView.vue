@@ -6,7 +6,7 @@
         <div class="mb-10"></div>
 
         <!-- title and extra -->
-        <div class="flex flex-col w-full gap-4">
+        <div class="flex flex-col w-full gap-4 mb-10">
           <span class="text-5xl font-bold">{{ post.title }}</span>
           <div class="flex gap-2" style="color: var(--text-secondary)">
             <span>redeyes</span>
