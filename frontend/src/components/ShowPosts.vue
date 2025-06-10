@@ -16,6 +16,7 @@
             :icon="['fas', 'image']"
             size="2xl"
             class="absolute m-auto top-0 left-0 right-0 bottom-0"
+            style="color: var(--bg-primary);"
             v-if="!post.coverImg"
           />
           <img
@@ -179,7 +180,7 @@ p {
 }
 
 .postImageBlock {
-  background-color: aquamarine;
+  background-color: var(--text-secondary);
 
   position: relative;
 
