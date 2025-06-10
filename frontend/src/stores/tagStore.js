@@ -27,7 +27,7 @@ export const useTagStore = defineStore("tags", () => {
         tags.value = cachedTags || [];
         lastFetched.value = cachedLastFetched;
 
-        console.log("Tags loaded from localStorage:", tags.value.length, "tags");
+        //console.log("Tags loaded from localStorage:", tags.value.length, "tags");
         return true;
       }
     } catch (error) {
@@ -44,7 +44,7 @@ export const useTagStore = defineStore("tags", () => {
         lastFetched: lastFetched.value,
       };
       localStorage.setItem("tagStore", JSON.stringify(dataToSave));
-      console.log("Tags saved to localStorage");
+      //console.log("Tags saved to localStorage");
     } catch (error) {
       console.error("Error saving tags to localStorage:", error);
     }
@@ -53,12 +53,12 @@ export const useTagStore = defineStore("tags", () => {
   const fetchTags = async (forceRefresh = false) => {
     // 캐시가 유효하고 강제 새로고침이 아닌 경우 서버 요청 건너뛰기
     if (!forceRefresh && isCacheValid.value && tags.value.length > 0) {
-      console.log("Using cached tags, skipping server request");
+      //console.log("Using cached tags, skipping server request");
       return tags.value;
     }
 
     try {
-      console.log("Fetching tags from server...");
+      //console.log("Fetching tags from server...");
       const { data } = await axios.get("https://notebook.o-r.kr/api/tags/");
 
       tags.value = data || [];
@@ -67,13 +67,13 @@ export const useTagStore = defineStore("tags", () => {
       // localStorage에 저장
       saveToLocalStorage();
 
-      console.log("Tags fetched and cached:", tags.value.length, "tags");
+      //console.log("Tags fetched and cached:", tags.value.length, "tags");
       return tags.value;
     } catch (error) {
       console.error("Error fetching tags:", error);
       // 오류 발생 시 캐시된 데이터 사용
       if (tags.value.length > 0) {
-        console.log("Using cached tags due to fetch error");
+        //console.log("Using cached tags due to fetch error");
         return tags.value;
       }
       throw error;
@@ -88,7 +88,7 @@ export const useTagStore = defineStore("tags", () => {
 
     // 캐시가 유효하면 서버 요청 건너뛰기
     if (loadedFromCache && isCacheValid.value) {
-      console.log("Using valid cached tags");
+      //console.log("Using valid cached tags");
       return tags.value;
     }
 
@@ -101,7 +101,7 @@ export const useTagStore = defineStore("tags", () => {
   };
 
   const refreshTags = async () => {
-    console.log("Forcing tag refresh...");
+    //console.log("Forcing tag refresh...");
     return await fetchTags(true);
   };
 
@@ -110,7 +110,7 @@ export const useTagStore = defineStore("tags", () => {
     selectedTag.value = null;
     lastFetched.value = null;
     localStorage.removeItem("tagStore");
-    console.log("Tag cache cleared");
+    //console.log("Tag cache cleared");
   };
 
   return {

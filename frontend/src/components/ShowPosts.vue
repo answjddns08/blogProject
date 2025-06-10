@@ -88,12 +88,8 @@ const getImageUrl = (postFolder, imageName) => {
 
 /** get Posts */
 async function getPosts() {
-  console.log("getPosts");
-
-  console.log(postStore.posts);
 
   if (route.query.search || !postStore.posts.length) {
-    console.log("searching!");
 
     const { data } = await axios.get("https://notebook.o-r.kr/api/posts/", {
       params: {
@@ -115,11 +111,23 @@ async function getPosts() {
 
 onMounted(getPosts);
 
-watch(route, getPosts);
-
-watch(route.query.search, getPosts, {
-  immediate: true,
+watch(route, () => {
+  // when route changes, get posts again
+  //console.log("route changed, getPosts called");
+  getPosts();
 });
+
+watch(
+  route.query.search,
+  () => {
+    // when search query changes, get posts again
+    //console.log("search query changed, getPosts called");
+    getPosts();
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <style scoped>

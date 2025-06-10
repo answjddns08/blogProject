@@ -36,7 +36,6 @@ export const usePostStore = defineStore("postStore", () => {
         posts.value = savedPosts || [];
         lastFetched.value = savedLastFetched;
 
-        console.log("Posts loaded from localStorage:", posts.value.length, "posts");
         return true;
       }
     } catch (error) {
@@ -54,7 +53,6 @@ export const usePostStore = defineStore("postStore", () => {
         lastFetched: lastFetched.value,
       };
       localStorage.setItem("postStore", JSON.stringify(dataToSave));
-      console.log("Posts saved to localStorage");
     } catch (error) {
       console.error("Error saving posts to localStorage:", error);
     }

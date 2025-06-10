@@ -20,7 +20,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
       const savedTheme = localStorage.getItem("darkMode");
       if (savedTheme !== null) {
         isDarkMode.value = JSON.parse(savedTheme);
-        console.log("Dark mode loaded from localStorage:", isDarkMode.value);
         return true;
       }
     } catch (error) {
@@ -33,7 +32,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
   const saveToLocalStorage = () => {
     try {
       localStorage.setItem("darkMode", JSON.stringify(isDarkMode.value));
-      console.log("Dark mode saved to localStorage:", isDarkMode.value);
     } catch (error) {
       console.error("Error saving dark mode to localStorage:", error);
     }
@@ -43,7 +41,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
     isDarkMode.value = !isDarkMode.value;
     applyTheme();
     saveToLocalStorage();
-    console.log("Dark mode toggled:", isDarkMode.value);
   };
 
   /**
@@ -61,7 +58,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
     isDarkMode.value = value;
     applyTheme();
     saveToLocalStorage();
-    console.log("Dark mode set to:", isDarkMode.value);
   };
 
   const applyTheme = () => {
@@ -87,7 +83,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
           window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
         isDarkMode.value = prefersDark;
         saveToLocalStorage();
-        console.log("Dark mode initialized from system preference:", isDarkMode.value);
       }
 
       // 테마 적용
@@ -102,7 +97,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
           if (savedTheme === null) {
             isDarkMode.value = e.matches;
             applyTheme();
-            console.log("Dark mode changed by system preference:", isDarkMode.value);
           }
         });
       }
@@ -117,7 +111,6 @@ export const useDarkModeStore = defineStore("darkMode", () => {
     isDarkMode.value = false;
     localStorage.removeItem("darkMode");
     applyTheme();
-    console.log("Dark mode settings cleared");
   };
 
   // Watch for changes and apply theme

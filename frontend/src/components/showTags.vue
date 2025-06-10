@@ -38,7 +38,7 @@ onMounted(async () => {
   try {
     await tagStore.initializeTags();
 
-    console.log("Tags initialized successfully:", tagStore.selectedTag);
+    //console.log("Tags initialized successfully:", tagStore.selectedTag);
   } catch (error) {
     console.error("Failed to initialize tags:", error);
   }
