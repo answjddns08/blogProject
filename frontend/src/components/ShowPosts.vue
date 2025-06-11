@@ -12,19 +12,21 @@
         :key="post"
       >
         <div class="postImageBlock">
-          <font-awesome-icon
-            :icon="['fas', 'image']"
-            size="2xl"
-            class="absolute m-auto top-0 left-0 right-0 bottom-0"
-            style="color: var(--bg-primary);"
-            v-if="!post.coverImg"
-          />
-          <img
+          <LazyImage
+            v-if="post.coverImg"
             :src="getImageUrl(post.folder, post.coverImg)"
             alt="cover img"
-            class="w-full h-full object-cover"
-            v-else
+            width="10rem"
+            height="10rem"
+            imageClass="w-full h-full object-cover"
           />
+          <div v-else class="placeholder-default">
+            <font-awesome-icon
+              :icon="['fas', 'image']"
+              size="2xl"
+              style="color: var(--bg-primary);"
+            />
+          </div>
         </div>
         <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
           <span class="text-2xl font-bold">{{ post.title }}</span>
@@ -55,6 +57,7 @@ import axios from "axios";
 import ShowTags from "./showTags.vue";
 import { usePostStore } from "@/stores/postStore";
 import AuthorField from "./authorField.vue";
+import LazyImage from "./LazyImage.vue";
 
 /**
  * @typedef {Object} Post
@@ -190,6 +193,13 @@ p {
   height: 10rem;
 
   flex-shrink: 0;
+}
+
+.placeholder-default {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .tagBlock {
