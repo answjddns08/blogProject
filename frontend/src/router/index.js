@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import PostView from "@/views/PostView.vue";
-import RegisterView from "@/views/RegisterView.vue";
-import aboutView from "@/views/aboutView.vue";
-import NotFoundView from "@/views/notFoundView.vue";
+
+// 코드 스플리팅을 위한 동적 import
+const HomeView = () => import("../views/HomeView.vue");
+const PostView = () => import("@/views/PostView.vue");
+const RegisterView = () => import("@/views/RegisterView.vue");
+const AboutView = () => import("@/views/aboutView.vue");
+const NotFoundView = () => import("@/views/notFoundView.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +23,7 @@ const router = createRouter({
     {
       path: "/about",
       name: "about",
-      component: aboutView,
+      component: AboutView,
     },
     {
       path: "/register",
