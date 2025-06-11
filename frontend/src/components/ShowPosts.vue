@@ -112,11 +112,7 @@ async function getPosts() {
 
 onMounted(getPosts);
 
-watch(route, () => {
-  // when route changes, get posts again
-  console.log("route changed, getPosts called");
-  getPosts();
-});
+watch(route, getPosts, { immediate: true });
 </script>
 
 <style scoped>

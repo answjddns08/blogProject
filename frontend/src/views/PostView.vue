@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="flex w-full justify-center">
-      <div class="flex flex-col w-5/12">
+      <div class="flex flex-col  w-1/2">
         <!-- margin space -->
         <div class="mb-10"></div>
 
