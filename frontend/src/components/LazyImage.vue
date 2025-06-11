@@ -8,7 +8,6 @@
       :class="imageClass"
       :style="{ opacity: isLoaded ? 1 : 0 }"
       @load="onLoad"
-      @error="onError"
     />
     <!-- 로딩 스피너 (교차점 진입했지만 아직 로드 안됨) -->
     <div v-if="isIntersecting && !isLoaded" class="loading-placeholder">
@@ -22,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   src: {
@@ -66,32 +65,14 @@ const placeholderStyle = {
 };
 
 const onLoad = () => {
-  console.log(`Image loaded: ${props.src}`);
   isLoaded.value = true;
 };
 
-const onError = () => {
-  console.warn(`Failed to load image: ${props.src}`);
-};
-
-// isIntersecting 변화 모니터링
-watch(isIntersecting, (newValue) => {
-  console.log(`isIntersecting changed for ${props.src}:`, newValue);
-});
-
-// isLoaded 변화 모니터링
-watch(isLoaded, (newValue) => {
-  console.log(`isLoaded changed for ${props.src}:`, newValue);
-});
-
 onMounted(() => {
-  console.log(`LazyImage component mounted with src: ${props.src}`);
-
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log(`Image entering viewport: ${props.src}`);
           isIntersecting.value = true;
           observer?.unobserve(entry.target);
         }
