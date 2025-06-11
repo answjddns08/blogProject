@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 // 코드 스플리팅을 위한 동적 import
 const HomeView = () => import("../views/HomeView.vue");
 const PostView = () => import("@/views/PostView.vue");
-const RegisterView = () => import("@/views/RegisterView.vue");
 const AboutView = () => import("@/views/aboutView.vue");
 const NotFoundView = () => import("@/views/notFoundView.vue");
 
@@ -24,11 +23,6 @@ const router = createRouter({
       path: "/about",
       name: "about",
       component: AboutView,
-    },
-    {
-      path: "/register",
-      name: "register",
-      component: RegisterView,
     },
     {
       path: "/404",
