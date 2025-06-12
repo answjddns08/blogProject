@@ -1,6 +1,6 @@
 <template>
   <div class="author-field">
-    <div class="bg-image-container"><img src="/background.png" class="object-cover" /></div>
+    <div class="bg-image-container"><img src="/background.webp" class="object-cover" /></div>
     <div class="author-image-container">
       <img src="/eye.png" class="object-cover" />
     </div>
