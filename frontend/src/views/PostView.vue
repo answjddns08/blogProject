@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="flex w-full justify-center">
-      <div class="flex flex-col  w-1/2">
+      <div class="flex flex-col w-1/2">
         <!-- margin space -->
         <div class="mb-10"></div>
 
@@ -28,9 +28,9 @@
         <HeadingList :headings="{ headings }" />
 
         <!-- main content -->
-        <ShowContent 
+        <ShowContent
           v-if="post.content"
-          :content="post.content" 
+          :content="post.content"
           :headings="headings"
           @update:headings="headings = $event"
         />
@@ -112,12 +112,12 @@ const postStore = usePostStore();
  * @type {Post}
  */
 const post = ref({
-  folder: '',
-  title: '',
-  date: '',
+  folder: "",
+  title: "",
+  date: "",
   tag: [],
-  content: '',
-  coverImg: ''
+  content: "",
+  coverImg: "",
 });
 
 const previousPost = ref(null);
