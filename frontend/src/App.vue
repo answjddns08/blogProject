@@ -2,6 +2,7 @@
 import { RouterView } from "vue-router";
 import { onMounted } from "vue";
 import NavBar from "./components/NavBar.vue";
+import SiteFooter from "./components/Footer.vue";
 import { useDarkModeStore } from "./stores/darkModeStore";
 import PerformanceMonitor from "./components/PerformanceMonitor.vue";
 
@@ -14,9 +15,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="height: 100vh; width: 100%">
+  <div style="min-height: 100vh; width: 100%; display: flex; flex-direction: column">
     <NavBar />
-    <RouterView />
+    <main style="flex: 1">
+      <RouterView />
+    </main>
+    <SiteFooter />
     <PerformanceMonitor />
   </div>
 </template>

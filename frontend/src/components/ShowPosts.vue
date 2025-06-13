@@ -5,21 +5,12 @@
         <ShowTags />
         <AuthorField />
       </div>
-      
+
       <!-- 가상 스크롤 컨테이너 -->
       <div class="virtual-scroll-wrapper" v-if="posts.length > 0">
-        <VirtualScroll 
-          :items="posts" 
-          :item-height="192" 
-          :container-height="800"
-          :buffer="2"
-        >
+        <VirtualScroll :items="posts" :item-height="192" :container-height="800" :buffer="2">
           <template #default="{ item: post }">
-            <RouterLink
-              class="postContainer"
-              :to="`/posts/${post.folder}`"
-              :key="post.folder"
-            >
+            <RouterLink class="postContainer" :to="`/posts/${post.folder}`" :key="post.folder">
               <div class="postImageBlock">
                 <LazyImage
                   v-if="post.coverImg"
@@ -33,7 +24,7 @@
                   <font-awesome-icon
                     :icon="['fas', 'image']"
                     size="2xl"
-                    style="color: var(--bg-primary);"
+                    style="color: var(--bg-primary)"
                   />
                 </div>
               </div>
@@ -57,7 +48,7 @@
           </template>
         </VirtualScroll>
       </div>
-      
+
       <p v-if="posts.length == 0">흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
     </div>
   </div>
@@ -106,9 +97,7 @@ const getImageUrl = (postFolder, imageName) => {
 
 /** get Posts */
 async function getPosts() {
-
   if (route.query.search || !postStore.posts.length) {
-
     const { data } = await axios.get("https://notebook.o-r.kr/api/posts/", {
       params: {
         search: route.query.search, //ex: https://notebook.o-r.kr/api/posts/?search=test
