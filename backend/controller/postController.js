@@ -1,4 +1,5 @@
 import bringPosts from "../functions/getPosts.js";
+import cache from "../utils/cache.js";
 
 /*
     post 디렉토리에 있는 폴더(포스트)들을 읽어옴
@@ -34,9 +35,22 @@ import bringPosts from "../functions/getPosts.js";
 async function getPosts(req, res) {
 	try {
 		const search = req.query.search ? req.query.search : null;
+		const cacheKey = search ? `posts_search_${search}` : 'posts_all';
+
+		// 캐시에서 먼저 확인
+		const cachedPosts = cache.get(cacheKey);
+		if (cachedPosts) {
+			console.log(`Cache hit for: ${cacheKey}`);
+			res.json(cachedPosts);
+			return;
+		}
+
+		console.log(`Cache miss for: ${cacheKey}, fetching from disk...`);
 
 		// 여러 개의 포스트를 불러올 때는 content 제외
 		const posts = await bringPosts(null, true);
+
+		let result = posts;
 
 		if (search) {
 			const searchTerms = search.split(",").map((term) => term.trim());
@@ -65,11 +79,13 @@ async function getPosts(req, res) {
 				return titleMatch || tagMatch;
 			});
 
-			res.json(filteredPosts);
-			return;
+			result = filteredPosts;
 		}
 
-		res.json(posts);
+		// 결과를 캐시에 저장
+		cache.set(cacheKey, result);
+
+		res.json(result);
 	} catch (error) {
 		res.status(500).json({ message: `parsing error: ${error.message}` });
 		console.log(error);
@@ -86,13 +102,27 @@ async function getPosts(req, res) {
 async function getPost(req, res) {
 	try {
 		const postFolder = req.params.folder;
+		const cacheKey = `post_${postFolder}`;
+
+		// 캐시에서 먼저 확인
+		const cachedPost = cache.get(cacheKey);
+		if (cachedPost) {
+			console.log(`Cache hit for post: ${postFolder}`);
+			res.json(cachedPost);
+			return;
+		}
+
+		console.log(`Cache miss for post: ${postFolder}, fetching from disk...`);
 
 		const post = await bringPosts(postFolder);
 
-		if (!post) {
+		if (!post || post.length === 0) {
 			res.status(404).json({ message: "Post not found" });
 			return;
 		}
+
+		// 결과를 캐시에 저장
+		cache.set(cacheKey, post[0]);
 
 		res.json(post[0]);
 	} catch (error) {
