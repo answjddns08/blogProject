@@ -4,7 +4,6 @@ import { onMounted } from "vue";
 import NavBar from "./components/NavBar.vue";
 import SiteFooter from "./components/Footer.vue";
 import { useDarkModeStore } from "./stores/darkModeStore";
-import PerformanceMonitor from "./components/PerformanceMonitor.vue";
 
 const darkModeStore = useDarkModeStore();
 
@@ -21,7 +20,6 @@ onMounted(() => {
       <RouterView />
     </main>
     <SiteFooter />
-    <PerformanceMonitor />
   </div>
 </template>
 
