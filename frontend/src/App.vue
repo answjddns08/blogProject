@@ -3,6 +3,7 @@ import { RouterView } from "vue-router";
 import { onMounted } from "vue";
 import NavBar from "./components/NavBar.vue";
 import { useDarkModeStore } from "./stores/darkModeStore";
+import PerformanceMonitor from "./components/PerformanceMonitor.vue";
 
 const darkModeStore = useDarkModeStore();
 
@@ -16,6 +17,7 @@ onMounted(() => {
   <div style="height: 100vh; width: 100%">
     <NavBar />
     <RouterView />
+    <PerformanceMonitor />
   </div>
 </template>
 

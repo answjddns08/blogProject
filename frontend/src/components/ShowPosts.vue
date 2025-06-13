@@ -5,46 +5,59 @@
         <ShowTags />
         <AuthorField />
       </div>
-      <RouterLink
-        class="postContainer"
-        v-for="post in posts"
-        :to="`/posts/${post.folder}`"
-        :key="post"
-      >
-        <div class="postImageBlock">
-          <LazyImage
-            v-if="post.coverImg"
-            :src="getImageUrl(post.folder, post.coverImg)"
-            alt="cover img"
-            width="10rem"
-            height="10rem"
-            imageClass="w-full h-full object-cover"
-          />
-          <div v-else class="placeholder-default">
-            <font-awesome-icon
-              :icon="['fas', 'image']"
-              size="2xl"
-              style="color: var(--bg-primary);"
-            />
-          </div>
-        </div>
-        <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
-          <span class="text-2xl font-bold">{{ post.title }}</span>
-          <span class="flex grow">
-            {{ post.summary.slice(0, 115) }}
-          </span>
-          <div class="flex gap-3">
-            <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
-              {{ tag }}
-            </div>
-          </div>
-          <div class="flex gap-1.5" style="color: var(--text-secondary)">
-            <div>
-              <span>redeyes - {{ post.date }}</span>
-            </div>
-          </div>
-        </div>
-      </RouterLink>
+      
+      <!-- 가상 스크롤 컨테이너 -->
+      <div class="virtual-scroll-wrapper" v-if="posts.length > 0">
+        <VirtualScroll 
+          :items="posts" 
+          :item-height="192" 
+          :container-height="800"
+          :buffer="2"
+        >
+          <template #default="{ item: post }">
+            <RouterLink
+              class="postContainer"
+              :to="`/posts/${post.folder}`"
+              :key="post.folder"
+            >
+              <div class="postImageBlock">
+                <LazyImage
+                  v-if="post.coverImg"
+                  :src="getImageUrl(post.folder, post.coverImg)"
+                  alt="cover img"
+                  width="10rem"
+                  height="10rem"
+                  imageClass="w-full h-full object-cover"
+                />
+                <div v-else class="placeholder-default">
+                  <font-awesome-icon
+                    :icon="['fas', 'image']"
+                    size="2xl"
+                    style="color: var(--bg-primary);"
+                  />
+                </div>
+              </div>
+              <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
+                <span class="text-2xl font-bold">{{ post.title }}</span>
+                <span class="flex grow">
+                  {{ post.summary.slice(0, 115) }}
+                </span>
+                <div class="flex gap-3">
+                  <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
+                    {{ tag }}
+                  </div>
+                </div>
+                <div class="flex gap-1.5" style="color: var(--text-secondary)">
+                  <div>
+                    <span>redeyes - {{ post.date }}</span>
+                  </div>
+                </div>
+              </div>
+            </RouterLink>
+          </template>
+        </VirtualScroll>
+      </div>
+      
       <p v-if="posts.length == 0">흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
     </div>
   </div>
@@ -58,6 +71,7 @@ import ShowTags from "./showTags.vue";
 import { usePostStore } from "@/stores/postStore";
 import AuthorField from "./authorField.vue";
 import LazyImage from "./LazyImage.vue";
+import VirtualScroll from "./VirtualScroll.vue";
 
 /**
  * @typedef {Object} Post
@@ -165,7 +179,7 @@ p {
   border-radius: 1rem;
   border: 2px solid transparent;
 
-  margin-bottom: 1.75rem;
+  margin-bottom: 1rem;
 
   transition: all 0.3s ease;
   position: relative;
@@ -218,5 +232,11 @@ p {
 
 .tagBlock::before {
   content: "# ";
+}
+
+.virtual-scroll-wrapper {
+  width: 47rem;
+  height: 800px;
+  overflow: hidden;
 }
 </style>
