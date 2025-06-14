@@ -9,43 +9,48 @@
       <!-- 가운데: 포스트 목록 -->
       <div class="posts-main-wrapper">
         <div v-if="posts.length > 0" class="posts-content-wrapper">
-          <RouterLink class="postContainer" v-for="post in posts" :to="`/posts/${post.folder}`" :key="post.folder">
-                <div class="postImageBlock">
-                  <LazyImage
-                    v-if="post.coverImg"
-                    :src="getImageUrl(post.folder, post.coverImg)"
-                    alt="cover img"
-                    width="10rem"
-                    height="10rem"
-                    imageClass="w-full h-full object-cover"
-                  />
-                  <div v-else class="placeholder-default">
-                    <font-awesome-icon
-                      :icon="['fas', 'image']"
-                      size="2xl"
-                      style="color: var(--bg-primary)"
-                    />
-                  </div>
+          <RouterLink
+            class="postContainer"
+            v-for="post in posts"
+            :to="`/posts/${post.folder}`"
+            :key="post.folder"
+          >
+            <div class="postImageBlock">
+              <LazyImage
+                v-if="post.coverImg"
+                :src="getImageUrl(post.folder, post.coverImg)"
+                alt="cover img"
+                width="10rem"
+                height="10rem"
+                imageClass="w-full h-full object-cover"
+              />
+              <div v-else class="placeholder-default">
+                <font-awesome-icon
+                  :icon="['fas', 'image']"
+                  size="2xl"
+                  style="color: var(--bg-primary)"
+                />
+              </div>
+            </div>
+            <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
+              <span class="text-2xl font-bold">{{ post.title }}</span>
+              <span class="flex grow">
+                {{ post.summary.slice(0, 115) }}
+              </span>
+              <div class="flex gap-3">
+                <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
+                  {{ tag }}
                 </div>
-                <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
-                  <span class="text-2xl font-bold">{{ post.title }}</span>
-                  <span class="flex grow">
-                    {{ post.summary.slice(0, 115) }}
-                  </span>
-                  <div class="flex gap-3">
-                    <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
-                      {{ tag }}
-                    </div>
-                  </div>
-                  <div class="flex gap-1.5" style="color: var(--text-secondary)">
-                    <div>
-                      <span>redeyes - {{ post.date }}</span>
-                    </div>
-                  </div>
+              </div>
+              <div class="flex gap-1.5" style="color: var(--text-secondary)">
+                <div>
+                  <span>redeyes - {{ post.date }}</span>
                 </div>
-              </RouterLink>
+              </div>
+            </div>
+          </RouterLink>
         </div>
-        
+
         <!-- 포스트가 없을 때 메시지 -->
         <div v-if="posts.length == 0" class="posts-content-wrapper">
           <p>흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
@@ -130,7 +135,6 @@ async function getPosts() {
   }
 
   posts.value = postStore.posts;
-
 }
 
 // 맨 위로 스크롤
@@ -156,7 +160,6 @@ p {
 
 /* 3단 레이아웃 래퍼들 */
 .posts-main-wrapper {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -180,10 +183,12 @@ p {
   flex-shrink: 0;
 
   position: sticky;
-  
-  top: 0;
 
-  padding-top: 7.5rem;
+  top: var(--navbar-height);
+
+  margin-top: 7.5rem;
+
+  padding-top: 5rem;
 
   height: fit-content;
 }
@@ -193,10 +198,12 @@ p {
   flex-shrink: 0;
   position: sticky;
 
-  top: 0;
-  padding-left: 10rem;
+  top: var(--navbar-height);
 
-  padding-top: 5.5rem;
+  margin-top: 7.5rem;
+
+  padding-top: 2.5rem;
+  padding-left: 10rem;
 
   height: fit-content;
 }
@@ -323,7 +330,7 @@ p {
   color: var(--accent-color);
 
   transform: translateY(-2px);
-  
+
   box-shadow: 0 6px 20px var(--shadow);
 }
 </style>

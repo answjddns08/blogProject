@@ -10,6 +10,8 @@
   --border-color: #dee2e6;
   --accent-color: #318ff3;
   --shadow: rgba(59, 130, 246, 0.3);
+
+  --navbar-height: 3.5rem;
 }
 
 /* 라이트 모드 */

@@ -14,13 +14,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="min-height: 100vh; width: 100%; display: flex; flex-direction: column">
+  <div class="app-layout">
     <NavBar />
-    <main style="flex: 1">
+    <main class="main-content">
       <RouterView />
     </main>
     <SiteFooter />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-layout {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: var(--navbar-height, 6rem);
+  transition: padding-top 0.3s ease;
+}
+</style>

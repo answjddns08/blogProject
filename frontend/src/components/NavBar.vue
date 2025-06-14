@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center p-2">
+  <div class="navbar-fixed">
     <!-- left elements -->
     <div class="flex px-10 gap-10 items-center">
       <RouterLink class="buttons font-bold text-4xl" to="/">Kellog</RouterLink>
@@ -36,7 +36,7 @@
           v-else
           :icon="['fas', 'moon']"
           size="2xl"
-          class="hover:text-blue-700 transition"
+          class="hover:text-blue-300 transition"
         />
       </button>
     </div>
@@ -59,6 +59,26 @@ function search() {
 </script>
 
 <style scoped>
+.navbar-fixed {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+
+  background-color: var(--bg-primary);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
 .buttons {
   color: inherit;
   text-decoration: none;
@@ -67,7 +87,7 @@ function search() {
 }
 
 .buttons:hover {
-  color: var(--accent-color); /* Tailwind's blue-700 */
+  color: var(--accent-color);
 }
 
 form {
