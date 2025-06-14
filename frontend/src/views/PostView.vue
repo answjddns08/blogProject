@@ -35,7 +35,7 @@
           @update:headings="headings = $event"
         />
         <div v-else class="text-center py-10">
-          <p>로딩 중...</p>
+          <p class="loading" >로딩 중</p>
         </div>
 
         <!-- other posts -->
@@ -211,5 +211,28 @@ watch(
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
   cursor: not-allowed;
+}
+
+.loading {
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.loading::after {
+  content: ".";
+  animation: dotting 2s steps(3, end) infinite;
+}
+
+@keyframes dotting {
+  0% {
+    content: ".";
+  }
+  33% {
+    content: "..";
+  }
+  66% {
+    content: "...";
+  }
 }
 </style>
