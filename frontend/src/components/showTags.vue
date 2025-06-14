@@ -72,10 +72,8 @@ watch(route, (newRoute) => {
 .tagBox {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  right: 100%;
-  margin-right: 15rem;
-  margin-top: 3.5rem;
+  width: 100%;
+  padding-top: 3.5rem;
 }
 
 .header {
