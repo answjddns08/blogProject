@@ -1,56 +1,73 @@
 <template>
-  <div class="flex justify-center">
-    <div class="flex flex-col mr-20">
-      <div class="flex relative mb-10">
+  <div class="flex justify-center min-h-screen">
+    <div class="flex w-full max-w-7xl px-4 gap-6">
+      <!-- 왼쪽: 태그 목록 -->
+      <div class="tags-wrapper">
         <ShowTags />
+      </div>
+
+      <!-- 가운데: 포스트 목록 -->
+      <div class="posts-main-wrapper">
+        <div v-if="posts.length > 0" class="posts-content-wrapper">
+          <RouterLink class="postContainer" v-for="post in posts" :to="`/posts/${post.folder}`" :key="post.folder">
+                <div class="postImageBlock">
+                  <LazyImage
+                    v-if="post.coverImg"
+                    :src="getImageUrl(post.folder, post.coverImg)"
+                    alt="cover img"
+                    width="10rem"
+                    height="10rem"
+                    imageClass="w-full h-full object-cover"
+                  />
+                  <div v-else class="placeholder-default">
+                    <font-awesome-icon
+                      :icon="['fas', 'image']"
+                      size="2xl"
+                      style="color: var(--bg-primary)"
+                    />
+                  </div>
+                </div>
+                <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
+                  <span class="text-2xl font-bold">{{ post.title }}</span>
+                  <span class="flex grow">
+                    {{ post.summary.slice(0, 115) }}
+                  </span>
+                  <div class="flex gap-3">
+                    <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
+                      {{ tag }}
+                    </div>
+                  </div>
+                  <div class="flex gap-1.5" style="color: var(--text-secondary)">
+                    <div>
+                      <span>redeyes - {{ post.date }}</span>
+                    </div>
+                  </div>
+                </div>
+              </RouterLink>
+        </div>
+        
+        <!-- 포스트가 없을 때 메시지 -->
+        <div v-if="posts.length == 0" class="posts-content-wrapper">
+          <p>흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 작가 정보 -->
+      <div class="author-wrapper">
         <AuthorField />
       </div>
-
-      <!-- 가상 스크롤 컨테이너 -->
-      <div class="virtual-scroll-wrapper" v-if="posts.length > 0">
-        <VirtualScroll :items="posts" :item-height="192" :container-height="800" :buffer="2">
-          <template #default="{ item: post }">
-            <RouterLink class="postContainer" :to="`/posts/${post.folder}`" :key="post.folder">
-              <div class="postImageBlock">
-                <LazyImage
-                  v-if="post.coverImg"
-                  :src="getImageUrl(post.folder, post.coverImg)"
-                  alt="cover img"
-                  width="10rem"
-                  height="10rem"
-                  imageClass="w-full h-full object-cover"
-                />
-                <div v-else class="placeholder-default">
-                  <font-awesome-icon
-                    :icon="['fas', 'image']"
-                    size="2xl"
-                    style="color: var(--bg-primary)"
-                  />
-                </div>
-              </div>
-              <div class="px-3 py-3 gap-1 flex flex-col h-full justify-center">
-                <span class="text-2xl font-bold">{{ post.title }}</span>
-                <span class="flex grow">
-                  {{ post.summary.slice(0, 115) }}
-                </span>
-                <div class="flex gap-3">
-                  <div class="tagBlock" v-for="tag in post.tag" :key="tag" v-show="tag">
-                    {{ tag }}
-                  </div>
-                </div>
-                <div class="flex gap-1.5" style="color: var(--text-secondary)">
-                  <div>
-                    <span>redeyes - {{ post.date }}</span>
-                  </div>
-                </div>
-              </div>
-            </RouterLink>
-          </template>
-        </VirtualScroll>
-      </div>
-
-      <p v-if="posts.length == 0">흠.. 포스트가 없나 보네요 ¯\_(ツ)_/¯</p>
     </div>
+
+    <!-- 맨 위로 가기 버튼 -->
+    <button
+      class="scroll-to-top-btn"
+      @click="scrollToTop"
+      v-show="posts.length > 0"
+      transition="scroll-btn"
+      :class="{ 'scroll-btn-enter-active': true, 'scroll-btn-leave-active': true }"
+    >
+      <font-awesome-icon icon="fa-solid fa-arrow-up" />
+    </button>
   </div>
 </template>
 
@@ -62,7 +79,6 @@ import ShowTags from "./showTags.vue";
 import { usePostStore } from "@/stores/postStore";
 import AuthorField from "./authorField.vue";
 import LazyImage from "./LazyImage.vue";
-import VirtualScroll from "./VirtualScroll.vue";
 
 /**
  * @typedef {Object} Post
@@ -114,6 +130,12 @@ async function getPosts() {
   }
 
   posts.value = postStore.posts;
+
+}
+
+// 맨 위로 스크롤
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 onMounted(getPosts);
@@ -130,6 +152,53 @@ p {
 
   font-size: 2rem;
   line-height: 1.75rem;
+}
+
+/* 3단 레이아웃 래퍼들 */
+.posts-main-wrapper {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 2.5rem;
+
+  flex: 1; /* 나머지 공간 차지 */
+  min-width: 0; /* 자식 요소가 부모의 너비를 넘지 않도록 */
+  max-width: 47rem;
+}
+
+.posts-content-wrapper {
+  width: 100%;
+  max-width: 47rem;
+}
+
+/* 태그 및 작성자 래퍼 - 사이드바로 고정 */
+.tags-wrapper {
+  width: 15rem;
+
+  flex-shrink: 0;
+
+  position: sticky;
+  
+  top: 0;
+
+  padding-top: 7.5rem;
+
+  height: fit-content;
+}
+
+.author-wrapper {
+  width: 15rem;
+  flex-shrink: 0;
+  position: sticky;
+
+  top: 0;
+  padding-left: 10rem;
+
+  padding-top: 5.5rem;
+
+  height: fit-content;
 }
 
 .sortMenu {
@@ -162,13 +231,14 @@ p {
 
   align-items: center;
 
-  width: 47rem;
+  width: 100%;
+  max-width: 47rem;
   height: 11.25rem;
 
   border-radius: 1rem;
   border: 2px solid transparent;
 
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   transition: all 0.3s ease;
   position: relative;
@@ -223,9 +293,37 @@ p {
   content: "# ";
 }
 
-.virtual-scroll-wrapper {
-  width: 47rem;
-  height: 800px;
-  overflow: hidden;
+/* 맨 위로 가기 버튼 */
+.scroll-to-top-btn {
+  position: fixed;
+
+  bottom: 2rem;
+
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+
+  background-color: var(--accent-color);
+  color: var(--text-primary);
+
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 15px var(--shadow);
+
+  transition: all 0.3s ease-in-out;
+
+  z-index: 100;
+}
+
+.scroll-to-top-btn:hover {
+  background-color: var(--text-primary);
+  color: var(--accent-color);
+
+  transform: translateY(-2px);
+  
+  box-shadow: 0 6px 20px var(--shadow);
 }
 </style>
