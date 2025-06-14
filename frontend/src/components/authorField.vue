@@ -21,14 +21,9 @@
 
 <style scoped>
 .author-field {
-  position: fixed;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  right: 2rem;
-  top: 7.5rem;
 }
 
 .bg-image-container {

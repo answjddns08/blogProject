@@ -1,7 +1,6 @@
 <template>
   <div class="tagBox">
-    <div class="fixed">
-      <div class="header">
+    <div class="header">
         <h1 class="text-2xl font-bold">Tag List</h1>
       </div>
       <ul class="list-disc gap-2 ml-2.5">
@@ -11,7 +10,6 @@
           </button>
         </li>
       </ul>
-    </div>
   </div>
 </template>
 
@@ -72,8 +70,6 @@ watch(route, (newRoute) => {
 .tagBox {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding-top: 3.5rem;
 }
 
 .header {
