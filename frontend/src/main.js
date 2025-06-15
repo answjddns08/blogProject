@@ -1,4 +1,5 @@
 import "./assets/style.css"; //tailwind css
+import "./assets/scrollbar.css"; //custom scrollbar styles
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

@@ -1,0 +1,94 @@
+/* 커스텀 스크롤바 스타일 */
+
+/* 웹킷 기반 브라우저 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  margin: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-color-hover, var(--accent-color))
+  );
+  border-radius: 6px;
+  border: 2px solid var(--bg-secondary);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--text-secondary), var(--text-primary));
+  border-color: var(--bg-primary);
+  transform: scale(1.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--text-primary);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-secondary);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--bg-secondary);
+}
+
+/* 부드러운 스크롤 동작 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 다크 모드 최적화 */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-color: var(--bg-primary);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--text-primary));
+  }
+
+  html {
+    scrollbar-color: var(--accent-color) var(--bg-primary);
+  }
+}
+
+/* 특별한 호버 효과 */
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* 스크롤바가 나타날 때 애니메이션 */
+::-webkit-scrollbar {
+  transition: width 0.3s ease;
+}
+
+::-webkit-scrollbar:hover {
+  width: 12px;
+}
+
+/* 모바일에서는 스크롤바 숨김 */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  html {
+    scrollbar-width: none;
+  }
+}
