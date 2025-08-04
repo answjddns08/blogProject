@@ -8,7 +8,7 @@ Vue.js 3와 Express.js로 구축한 개인 블로그 프로젝트입니다. 마�
 - **태그 시스템**: 포스트 카테고리화 및 필터링
 - **검색 기능**: 포스트 제목, 내용 기반 검색
 - **다크 모드**: 시스템 설정 감지 및 수동 토글
-- **목차 기능**: 긴 포스트의 헤딩 기반 네비게이션
+- **목차 기능**: 포스트의 헤딩 기반 네비게이션
 - **캐싱 시스템**: localStorage를 활용한 성능 최적화
 
 ## 🛠 기술 스택
@@ -138,25 +138,3 @@ npm run build
 ### Production 환경
 - Frontend: `frontend/dist/` 폴더를 정적 호스팅
 - Backend: Node.js 서버 환경에 배포
-
-
-## 📄 라이선스
-
-MIT License
-
-## 🤝 기여하기
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📞 연락처
-
-- GitHub: [@answjddns08](https://github.com/answjddns08)
-- Blog: [Your Blog URL]
-
----
-
-⭐ 이 프로젝트가 도움이 되었다면 스타를 눌러주세요!
